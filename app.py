@@ -3,7 +3,7 @@
 
 import sys
 from flask_frozen import Freezer
-from flask_flatpages import FlatPages
+from flask_flatpages import FlatPages, pygments_style_defs
 from flask import Flask, render_template
 from typing import Set, Dict, Tuple, List, Optional
 
@@ -17,6 +17,11 @@ freezer: Freezer = Freezer(app)
 def home() -> Flask:
     # ::: todo : sort posts by date :::
     return render_template("index.html", pages=pages)
+
+
+@app.route("/pygments.css")
+def pygments_css() -> pygments_style_defs:
+    return pygments_style_defs("trac"), 200, {"Content-Type": "text/css"}
 
 
 @app.route("/<path:path>/")

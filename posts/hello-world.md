@@ -1,5 +1,5 @@
 title: Hello World
-date: Sep 03 2018
+date: 2017-12-22
 
 **Hello World**, from a *page*!
 

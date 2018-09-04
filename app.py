@@ -15,11 +15,17 @@ freezer: Freezer = Freezer(app)
 
 @app.route("/")
 def home() -> Flask:
-    # :::| todo: sort posts by date |:::
-    return render_template("index.html", pages=pages)
+    posts = [page for page in pages if "date" in page.meta]
+    sorted_posts = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
+    return render_template("index.html", pages=sorted_posts)
+
 
 # :::| todo: custom 404 page |:::
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 # :::| todo: RSS stream |:::
+
 
 @app.route("/static/pygments.css")
 def pygments_css() -> pygments_style_defs:

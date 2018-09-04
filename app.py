@@ -3,9 +3,9 @@
 
 import sys
 from flask_frozen import Freezer
-from flask_flatpages import FlatPages, pygments_style_defs
 from flask import Flask, render_template
 from typing import Set, Dict, Tuple, List, Optional
+from flask_flatpages import FlatPages, pygments_style_defs
 
 app: Flask = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -19,7 +19,7 @@ def home() -> Flask:
     return render_template("index.html", pages=pages)
 
 
-@app.route("/pygments.css")
+@app.route("/static/pygments.css")
 def pygments_css() -> pygments_style_defs:
     return pygments_style_defs("trac"), 200, {"Content-Type": "text/css"}
 

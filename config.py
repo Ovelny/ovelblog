@@ -15,7 +15,7 @@ PROJECT_ROOT: str = parent_dir(HERE)
 
 # ::: freezer config :::
 REPO_NAME: str = "ovelny.github.io"
-FREEZER_DESTINATION: str = PROJECT_ROOT
+FREEZER_DESTINATION: str = HERE
 FREEZER_REMOVE_EXTRA_FILES: bool = False
 FREEZER_BASE_URL: str = "http://localhost/{0}".format(REPO_NAME)
 

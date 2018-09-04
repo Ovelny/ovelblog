@@ -11,7 +11,6 @@ def parent_dir(path: str) -> str:
 
 # ::: paths & locations :::
 HERE: str = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT: str = parent_dir(HERE)
 
 # ::: freezer config :::
 REPO_NAME: str = "ovelblog"

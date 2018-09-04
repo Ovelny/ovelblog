@@ -15,6 +15,7 @@ freezer: Freezer = Freezer(app)
 
 @app.route("/")
 def home() -> Flask:
+    # ::: todo : sort posts by date :::
     return render_template("index.html", pages=pages)
 
 

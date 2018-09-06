@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>Ovelny</title>
+    <description>Ovelny</description>
+    <link>http://localhost/ovelblog/</link>
+    
+
+    
+    <item>
+        <title>Hello World</title>
+        
+        <link>http://localhost/ovelblog/ovelblog/blog/hello-world/</link>
+        
+        <guid>http://localhost/ovelblog/ovelblog/blog/hello-world/</guid>
+        
+        <pubDate>2017-12-22</pubDate>
+    </item>
+    
+    <item>
+        <title>lorem</title>
+        
+        <link>http://localhost/ovelblog/ovelblog/blog/lorem/</link>
+        
+        <guid>http://localhost/ovelblog/ovelblog/blog/lorem/</guid>
+        
+        <pubDate>2017-07-22</pubDate>
+    </item>
+    
+    <item>
+        <title>bla</title>
+        
+        <link>http://localhost/ovelblog/ovelblog/blog/bla/</link>
+        
+        <guid>http://localhost/ovelblog/ovelblog/blog/bla/</guid>
+        
+        <pubDate>2017-10-22</pubDate>
+    </item>
+    
+
+</channel>
+</rss>

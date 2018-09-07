@@ -23,4 +23,4 @@ DEBUG: bool = True
 FLATPAGES_EXTENSION: str = ".md"
 FLATPAGES_AUTO_RELOAD: bool = True
 FLATPAGES_ROOT: str = os.path.join(HERE, "posts")
-FLATPAGES_MARKDOWN_EXTENSIONS: List[str] = ["codehilite"]
+FLATPAGES_MARKDOWN_EXTENSIONS: List[str] = ["codehilite", "fenced_code"]

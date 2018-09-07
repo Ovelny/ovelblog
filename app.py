@@ -19,6 +19,7 @@ def home() -> Flask:
     sorted_posts = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
     return render_template("index.html", pages=sorted_posts)
 
+
 # :::| custom 404 page |:::
 @app.errorhandler(404)
 def page_not_found(e: str) -> Flask:
@@ -28,15 +29,17 @@ def page_not_found(e: str) -> Flask:
 # :::| RSS feed |:::
 @app.route("/atom.xml")
 def feed() -> Flask:
-    template = render_template("atom.xml", pages=pages)
-    response = make_response(template)
+    template: Flask = render_template("atom.xml", pages=pages)
+    response: Flask = make_response(template)
     response.headers["Content-Type"] = "text/xml"
     return response
+
 
 # :::| pygments css to render code highlighting |:::
 @app.route("/static/pygments.css")
 def pygments_css() -> pygments_style_defs:
     return pygments_style_defs("trac"), 200, {"Content-Type": "text/css"}
+
 
 # :::| articles and other pages rendering |:::
 @app.route("/<path:path>/")

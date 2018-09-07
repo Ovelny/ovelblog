@@ -15,9 +15,9 @@
         <guid>http://localhost/ovelblog/ovelblog/blog/hello-world/</guid>
         
         <pubDate>2017-12-22</pubDate>
-        <content type="html"><p><strong>Hello World</strong>, from a <em>page</em>!</p>
+        <content type="html"><![CDATA[ <p><strong>Hello World</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
-</pre></div></content>
+</pre></div> ]]></content>
     </item>
     
     <item>
@@ -28,9 +28,9 @@
         <guid>http://localhost/ovelblog/ovelblog/blog/rss_test/</guid>
         
         <pubDate>2018-12-22</pubDate>
-        <content type="html"><p><strong>Hello World</strong>, this is an RSS test post!</p>
+        <content type="html"><![CDATA[ <p><strong>Hello World</strong>, this is an RSS test post!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
-</pre></div></content>
+</pre></div> ]]></content>
     </item>
     
     <item>
@@ -41,9 +41,9 @@
         <guid>http://localhost/ovelblog/ovelblog/blog/lorem/</guid>
         
         <pubDate>2017-07-22</pubDate>
-        <content type="html"><p><strong>lorem</strong>, from a <em>page</em>!</p>
+        <content type="html"><![CDATA[ <p><strong>lorem</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
-</pre></div></content>
+</pre></div> ]]></content>
     </item>
     
     <item>
@@ -54,9 +54,9 @@
         <guid>http://localhost/ovelblog/ovelblog/blog/bla/</guid>
         
         <pubDate>2017-10-22</pubDate>
-        <content type="html"><p><strong>Bla</strong>, from a <em>page</em>!</p>
+        <content type="html"><![CDATA[ <p><strong>Bla</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
-</pre></div></content>
+</pre></div> ]]></content>
     </item>
     
 

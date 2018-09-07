@@ -13,7 +13,7 @@
         <{{ tag }}>{{ request.url_root[:-1] + url_for('page', path=page.path) }}</{{ tag }}>
         {% endfor %}
         <pubDate>{{ page.date }}</pubDate>
-        <content type="html">{{ page }}</content>
+        <content type="html"><![CDATA[ {{ page }} ]]></content>
     </item>
     {% endfor %}
 

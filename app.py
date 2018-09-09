@@ -12,11 +12,17 @@ app.config.from_pyfile("config.py")
 pages: FlatPages = FlatPages(app)
 freezer: Freezer = Freezer(app)
 
+
+def sorted_by_date(pages: FlatPages) -> List:
+    posts: List = [page for page in pages if "date" in page.meta]
+    sorted_posts: List = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
+    return sorted_posts
+
+
 # :::| homepage with sorted articles |:::
 @app.route("/")
 def home() -> Flask:
-    posts = [page for page in pages if "date" in page.meta]
-    sorted_posts = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
+    sorted_posts: List = sorted_by_date(pages)
     return render_template("index.html", pages=sorted_posts)
 
 
@@ -29,7 +35,8 @@ def page_not_found(e: str) -> Flask:
 # :::| RSS feed |:::
 @app.route("/atom.xml")
 def feed() -> Flask:
-    template: Flask = render_template("atom.xml", pages=pages)
+    sorted_posts: List = sorted_by_date(pages)
+    template: Flask = render_template("atom.xml", pages=sorted_posts)
     response: Flask = make_response(template)
     response.headers["Content-Type"] = "text/xml"
     return response

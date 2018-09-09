@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>Ovelny</title>
-    <description>Ovelny</description>
+    <title><![CDATA[ Ovelny ]]></title>
+    <description><![CDATA[ Ovelny ]]></description>
     <link>{{ request.url_root }}</link>
     {% set link_id = ["link", "guid"] %}
 
     {% for page in pages %}
     <item>
-        <title>{{ page.title }}</title>
+        <title><![CDATA[ {{ page.title }} ]]></title>
         {% for tag in link_id %}
-        <{{ tag }}>{{ request.url_root[:-1] + url_for('page', path=page.path) }}</{{ tag }}>
+        <{{ tag }}>{{ request.host_url[:-1] + url_for('page', path=page.path) }}</{{ tag }}>
         {% endfor %}
         <pubDate>{{ page.date }}</pubDate>
         <content type="html"><![CDATA[ {{ page }} ]]></content>

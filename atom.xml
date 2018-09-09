@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>Ovelny</title>
-    <description>Ovelny</description>
-    <link>http://localhost/ovelblog/</link>
+    <title><![CDATA[ Ovelny ]]></title>
+    <description><![CDATA[ Ovelny ]]></description>
+    <link>https://ovelny.xyz/ovelblog/</link>
     
 
     
     <item>
-        <title>Hello World</title>
+        <title><![CDATA[ RSS test ]]></title>
         
-        <link>http://localhost/ovelblog/ovelblog/blog/hello-world/</link>
+        <link>https://ovelny.xyz/ovelblog/blog/rss_test/</link>
         
-        <guid>http://localhost/ovelblog/ovelblog/blog/hello-world/</guid>
-        
-        <pubDate>2017-12-22</pubDate>
-        <content type="html"><![CDATA[ <p><strong>Hello World</strong>, from a <em>page</em>!</p>
-<div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
-</pre></div> ]]></content>
-    </item>
-    
-    <item>
-        <title>RSS test</title>
-        
-        <link>http://localhost/ovelblog/ovelblog/blog/rss_test/</link>
-        
-        <guid>http://localhost/ovelblog/ovelblog/blog/rss_test/</guid>
+        <guid>https://ovelny.xyz/ovelblog/blog/rss_test/</guid>
         
         <pubDate>2018-12-22</pubDate>
         <content type="html"><![CDATA[ <p><strong>Hello World</strong>, this is an RSS test post!</p>
@@ -34,27 +21,40 @@
     </item>
     
     <item>
-        <title>lorem</title>
+        <title><![CDATA[ Hello World ]]></title>
         
-        <link>http://localhost/ovelblog/ovelblog/blog/lorem/</link>
+        <link>https://ovelny.xyz/ovelblog/blog/hello-world/</link>
         
-        <guid>http://localhost/ovelblog/ovelblog/blog/lorem/</guid>
+        <guid>https://ovelny.xyz/ovelblog/blog/hello-world/</guid>
         
-        <pubDate>2017-07-22</pubDate>
-        <content type="html"><![CDATA[ <p><strong>lorem</strong>, from a <em>page</em>!</p>
+        <pubDate>2017-12-22</pubDate>
+        <content type="html"><![CDATA[ <p><strong>Hello World</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
 </pre></div> ]]></content>
     </item>
     
     <item>
-        <title>bla</title>
+        <title><![CDATA[ bla ]]></title>
         
-        <link>http://localhost/ovelblog/ovelblog/blog/bla/</link>
+        <link>https://ovelny.xyz/ovelblog/blog/bla/</link>
         
-        <guid>http://localhost/ovelblog/ovelblog/blog/bla/</guid>
+        <guid>https://ovelny.xyz/ovelblog/blog/bla/</guid>
         
         <pubDate>2017-10-22</pubDate>
         <content type="html"><![CDATA[ <p><strong>Bla</strong>, from a <em>page</em>!</p>
+<div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
+</pre></div> ]]></content>
+    </item>
+    
+    <item>
+        <title><![CDATA[ lorem ]]></title>
+        
+        <link>https://ovelny.xyz/ovelblog/blog/lorem/</link>
+        
+        <guid>https://ovelny.xyz/ovelblog/blog/lorem/</guid>
+        
+        <pubDate>2017-07-22</pubDate>
+        <content type="html"><![CDATA[ <p><strong>lorem</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
 </pre></div> ]]></content>
     </item>

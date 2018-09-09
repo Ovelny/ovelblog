@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[Ovelny]]></title>
-    <link href="{{ request.base_url }}"rel="self"/>
+    <link href="{{ request.base_url }}" rel="self"/>
     <link href="{{ request.url_root }}"/>
     <id>{{ request.url_root }}</id>
     <author>

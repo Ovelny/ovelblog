@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-    <title><![CDATA[ Ovelny ]]></title>
-    <description><![CDATA[ Ovelny ]]></description>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Ovelny]]></title>
+    <link href="{{ request.base_url }}"rel="self"/>
     <link href="{{ request.url_root }}"/>
-    {% set link_id = ["link", "guid"] %}
+    <id>{{ request.url_root }}</id>
+    <author>
+        <name><![CDATA[Ovelny]]></name>
+    </author>
 
     {% for page in pages %}
-    <item>
-        <title><![CDATA[ {{ page.title }} ]]></title>
+    <entry>
+        <title type="html"><![CDATA[{{ page.title }}]]></title>
         <link href="{{ request.host_url[:-1] + url_for('page', path=page.path) }}"/>
-        <guid>{{ request.host_url[:-1] + url_for('page', path=page.path) }}</guid>
-        <pubDate>{{ page.date }}</pubDate>
-        <content type="html"><![CDATA[ {{ page }} ]]></content>
-    </item>
+        <updated>{{ page.date }}</updated>
+        <id>{{ request.host_url[:-1] + url_for('page', path=page.path) }}</id>
+        <content type="html"><![CDATA[{{ page }}]]></content>
+    </entry>
     {% endfor %}
 
-</channel>
-</rss>
+</feed>

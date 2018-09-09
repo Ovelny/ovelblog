@@ -3,15 +3,14 @@
 <channel>
     <title><![CDATA[ Ovelny ]]></title>
     <description><![CDATA[ Ovelny ]]></description>
-    <link>{{ request.url_root }}</link>
+    <link href="{{ request.url_root }}"/>
     {% set link_id = ["link", "guid"] %}
 
     {% for page in pages %}
     <item>
         <title><![CDATA[ {{ page.title }} ]]></title>
-        {% for tag in link_id %}
-        <{{ tag }}>{{ request.host_url[:-1] + url_for('page', path=page.path) }}</{{ tag }}>
-        {% endfor %}
+        <link href="{{ request.host_url[:-1] + url_for('page', path=page.path) }}"/>
+        <guid>{{ request.host_url[:-1] + url_for('page', path=page.path) }}</guid>
         <pubDate>{{ page.date }}</pubDate>
         <content type="html"><![CDATA[ {{ page }} ]]></content>
     </item>

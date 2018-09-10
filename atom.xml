@@ -3,7 +3,7 @@
     <title><![CDATA[Ovelny]]></title>
     <link href="https://ovelny.xyz/ovelblog/atom.xml" rel="self"/>
     <link href="https://ovelny.xyz/ovelblog/"/>
-    <updated>2018-12-22T00:00:00+02:00</updated>
+    <updated>2017-09-04T00:00:00+02:00</updated>
     <id>https://ovelny.xyz/ovelblog/</id>
     <author>
         <name><![CDATA[Ovelny]]></name>
@@ -13,7 +13,7 @@
     <entry>
         <title type="html"><![CDATA[RSS test]]></title>
         <link href="https://ovelny.xyz/ovelblog/blog/rss_test/"/>
-        <updated>2018-12-22T00:00:00+02:00</updated>
+        <updated>2017-09-04T00:00:00+02:00</updated>
         <id>https://ovelny.xyz/ovelblog/blog/rss_test/</id>
         <content type="html"><![CDATA[<p><strong>Hello World</strong>, this is an RSS test post!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
@@ -21,9 +21,19 @@
     </entry>
     
     <entry>
+        <title type="html"><![CDATA[lorem]]></title>
+        <link href="https://ovelny.xyz/ovelblog/blog/lorem/"/>
+        <updated>2017-09-03T00:00:00+02:00</updated>
+        <id>https://ovelny.xyz/ovelblog/blog/lorem/</id>
+        <content type="html"><![CDATA[<p><strong>lorem</strong>, from a <em>page</em>!</p>
+<div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
+</pre></div>]]></content>
+    </entry>
+    
+    <entry>
         <title type="html"><![CDATA[Hello World]]></title>
         <link href="https://ovelny.xyz/ovelblog/blog/hello-world/"/>
-        <updated>2017-12-22T00:00:00+02:00</updated>
+        <updated>2017-09-02T00:00:00+02:00</updated>
         <id>https://ovelny.xyz/ovelblog/blog/hello-world/</id>
         <content type="html"><![CDATA[<p><strong>Hello World</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
@@ -33,19 +43,9 @@
     <entry>
         <title type="html"><![CDATA[bla]]></title>
         <link href="https://ovelny.xyz/ovelblog/blog/bla/"/>
-        <updated>2017-10-22T00:00:00+02:00</updated>
+        <updated>2017-09-01T00:00:00+02:00</updated>
         <id>https://ovelny.xyz/ovelblog/blog/bla/</id>
         <content type="html"><![CDATA[<p><strong>Bla</strong>, from a <em>page</em>!</p>
-<div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
-</pre></div>]]></content>
-    </entry>
-    
-    <entry>
-        <title type="html"><![CDATA[lorem]]></title>
-        <link href="https://ovelny.xyz/ovelblog/blog/lorem/"/>
-        <updated>2017-07-22T00:00:00+02:00</updated>
-        <id>https://ovelny.xyz/ovelblog/blog/lorem/</id>
-        <content type="html"><![CDATA[<p><strong>lorem</strong>, from a <em>page</em>!</p>
 <div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
 </pre></div>]]></content>
     </entry>

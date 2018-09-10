@@ -3,6 +3,7 @@
     <title><![CDATA[Ovelny]]></title>
     <link href="{{ request.base_url }}" rel="self"/>
     <link href="{{ request.url_root }}"/>
+    <updated>{{ pages[0].date.strftime("%Y-%d-%m" + "T00:00:00+02:00") }}</updated>
     <id>{{ request.url_root }}</id>
     <author>
         <name><![CDATA[Ovelny]]></name>
@@ -12,7 +13,7 @@
     <entry>
         <title type="html"><![CDATA[{{ page.title }}]]></title>
         <link href="{{ request.host_url[:-1] + url_for('page', path=page.path) }}"/>
-        <updated>{{ page.date }}</updated>
+        <updated>{{ page.date.strftime("%Y-%d-%m" + "T00:00:00+02:00") }}</updated>
         <id>{{ request.host_url[:-1] + url_for('page', path=page.path) }}</id>
         <content type="html"><![CDATA[{{ page }}]]></content>
     </entry>

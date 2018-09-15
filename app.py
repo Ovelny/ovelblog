@@ -3,8 +3,8 @@
 
 import sys
 from flask_frozen import Freezer
-from flask import Flask, render_template, make_response
 from typing import Set, Dict, Tuple, List, Optional
+from flask import Flask, render_template, make_response
 from flask_flatpages import FlatPages, pygments_style_defs
 
 app: Flask = Flask(__name__)

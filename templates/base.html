@@ -1,17 +1,27 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Ovelny</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Ovelny - Learning Infosec, hacking things, CTFs and random thoughts">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='pygments.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='spectre.min.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='spectre-exp.min.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='spectre-icons.min.css') }}">
+    <link href="/atom.xml" rel="alternate" title="Ovelny" type="application/atom+xml">
 </head>
 <body>
-    <h1><a href="{{ url_for('home') }}">Ovelny</a></h1>
-    {% block content %}
-    <p>Default content</p>
-    {% endblock content %}
+    <div class="container">
+        <div class="columns">
+            <div class="column col-5 centered text-justify">
+                <h2 class="text-center"><a href="{{ url_for('home') }}">Ovelny</a></h2>
+                {% block content %}
+                <p>Default content</p>
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>

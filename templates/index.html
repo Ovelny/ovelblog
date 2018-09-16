@@ -6,7 +6,7 @@
     <ul>
     {% for page in pages %}
         <li>
-            {{ page.date }} <a class="ml-2" href="{{ url_for('page', path=page.path) }}">{{ page.title }}</a>
+            {{ page.date.strftime("%d %b %Y") }} <a class="ml-2" href="{{ url_for('page', path=page.path) }}">{{ page.title }}</a>
         </li>
     {% else %}
         <li>No stuff.</li>

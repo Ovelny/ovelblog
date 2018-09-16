@@ -8,6 +8,9 @@ Deleniti facere maxime, facilis nesciunt ipsam animi consequuntur. Architecto qu
 
 
 ```python
-help = "help"
+def sorted_by_date(pages: FlatPages) -> List:
+    posts: List = [page for page in pages if "date" in page.meta]
+    sorted_posts: List = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
+    return sorted_posts
 ```
 Inventore magnam tempore eos fuga soluta fugit dolore, quis hic laboriosam. Inventore esse quis nam odio vel hic sequi molestiae, ut rerum culpa fuga, eaque quos.

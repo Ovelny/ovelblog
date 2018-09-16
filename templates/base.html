@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Ovelny - Learning Infosec, hacking things, CTFs and random thoughts">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='pygments.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pygments.min.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='spectre.min.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='spectre-exp.min.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='spectre-icons.min.css') }}">
@@ -15,8 +15,21 @@
 <body>
     <div class="container">
         <div class="columns">
-            <div class="column col-5 centered text-justify">
-                <h2 class="text-center"><a href="{{ url_for('home') }}">Ovelny</a></h2>
+            <div class="column col-5 centered text-justify main-block">
+                <header class="navbar">
+                    <section class="navbar-section">
+                        <img src="{{ url_for('static', filename='images/ovelny-logo.jpg') }}" alt="Ovelny logo" class="logo s-rounded">
+                        <h2>
+                            <a href="{{ url_for('home') }}">Ovelny</a>
+                        </h2>
+                    </section>
+                    <section class="navbar-section navbar-links">
+                            <a href="https://curiouscat.me/Ovelny" class="btn btn-link">AMA</a>
+                            <a href="https://twitter.com/Ovelny" class="btn btn-link">Twitter</a>
+                            <a href="https://github.com/Ovelny" class="btn btn-link">Github</a>
+                            <a href="/atom.xml" class="btn btn-link">RSS</a>
+                    </section>
+                </header>
                 {% block content %}
                 <p>Default content</p>
                 {% endblock content %}

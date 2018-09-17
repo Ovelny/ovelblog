@@ -17,24 +17,31 @@
         <div class="columns">
             <div class="column col-5 centered text-justify main-block">
                 <header class="navbar">
-                    <section class="navbar-section">
-                        <img src="{{ url_for('static', filename='images/ovelny-logo.jpg') }}" alt="Ovelny logo" class="logo s-rounded">
-                        <h2>
-                            <a href="{{ url_for('home') }}">Ovelny</a>
-                        </h2>
-                    </section>
+                    <a href="{{ url_for('home') }}" class="home-link">
+                        <section class="navbar-section">
+                            <img src="{{ url_for('static', filename='images/ovelny-logo.jpg') }}" alt="Ovelny logo" class="logo s-rounded">
+                            <h2>Ovelny</h2>
+                        </section>
+                    </a>
                     <section class="navbar-section navbar-links">
-                            <a href="https://curiouscat.me/Ovelny" class="btn btn-link">AMA</a>
-                            <a href="https://twitter.com/Ovelny" class="btn btn-link">Twitter</a>
-                            <a href="https://github.com/Ovelny" class="btn btn-link">Github</a>
-                            <a href="/atom.xml" class="btn btn-link">RSS</a>
+                            <a href="https://curiouscat.me/Ovelny" target="_blank" rel="noopener noreferrer" class="btn btn-link">AMA</a>
+                            <a href="https://twitter.com/Ovelny" target="_blank" rel="noopener noreferrer" class="btn btn-link">Twitter</a>
+                            <a href="https://github.com/Ovelny" target="_blank" rel="noopener noreferrer" class="btn btn-link">Github</a>
+                            <a href="/atom.xml" target="_blank" rel="noopener noreferrer" class="btn btn-link">RSS</a>
                     </section>
                 </header>
+                <main>
                 {% block content %}
                 <p>Default content</p>
                 {% endblock content %}
+                </main>
+                <footer>
+                    <div class="footer-section">© Ovelny</div>
+                    <div class="footer-section">:::| De Omnibus Dubitandum |:::</div>
+                </footer>
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='bottom-footer.js') }}"></script>
 </body>
 </html>

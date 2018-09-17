@@ -66,11 +66,6 @@ ul ul {
     margin: .8rem 0 .8rem .8rem
 }
 
-.btn:focus,
-a:focus {
-    box-shadow: 0 0 0 .1rem rgba(181, 126, 220, .2)
-}
-
 .form-input,
 .has-icon-left,
 .has-icon-right,
@@ -180,7 +175,11 @@ audio:not([controls]) {
 }
 
 img {
-    border-style: none
+    border-style: none;
+    display: block;
+	margin: auto;
+	max-width: 100%;
+	margin-bottom: 1.2rem
 }
 
 svg:not(:root) {
@@ -1989,7 +1988,8 @@ video.video-responsive::before {
     }
 }
 
-.navbar {
+.navbar,
+footer {
     align-items: stretch;
     display: flex;
     display: -ms-flexbox;
@@ -2000,7 +2000,8 @@ video.video-responsive::before {
     justify-content: space-between
 }
 
-.navbar .navbar-section {
+.navbar .navbar-section,
+footer .footer-section {
     align-items: center;
     display: flex;
     display: -ms-flexbox;
@@ -2009,7 +2010,8 @@ video.video-responsive::before {
     -ms-flex-align: center
 }
 
-.navbar .navbar-section:not(:first-child):last-child {
+.navbar .navbar-section:not(:first-child):last-child,
+footer .footer-section:not(:first-child):last-child {
     -ms-flex-pack: end;
     justify-content: flex-end
 }
@@ -3632,7 +3634,7 @@ a.text-error:visited {
     margin-bottom: 1rem
 }
 
-h2 > a {
+.home-link {
     color: inherit !important;
     text-decoration: none !important
 }
@@ -3644,4 +3646,12 @@ h2 > a {
 .logo {
     margin-bottom: 1em;
 	margin-right: 1em
+}
+
+.post-title {
+    margin-top: .5em
+}
+
+footer .footer-section {
+    font-size: .8em
 }

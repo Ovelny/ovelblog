@@ -1,0 +1,1 @@
+window.onload=function(){if(null==document.getElementById("about"))return!1;var e=document.body.offsetHeight,n=window.innerHeight;document.getElementsByTagName("footer")[0].style.marginTop=n-e+"px"};

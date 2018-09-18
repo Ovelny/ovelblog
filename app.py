@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
+import os
 import sys
 from flask_frozen import Freezer
 from typing import Set, Dict, Tuple, List, Optional
-from flask import Flask, render_template, make_response
 from flask_flatpages import FlatPages, pygments_style_defs
+from flask import Flask, render_template, make_response, send_from_directory
 
 app: Flask = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -17,6 +17,10 @@ def sorted_by_date(pages: FlatPages) -> List:
     posts: List = [page for page in pages if "date" in page.meta]
     sorted_posts: List = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
     return sorted_posts
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 
 # :::| homepage with sorted articles |:::

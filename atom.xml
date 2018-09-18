@@ -3,12 +3,22 @@
     <title><![CDATA[Ovelny]]></title>
     <link href="https://ovelny.xyz/ovelblog/atom.xml" rel="self"/>
     <link href="https://ovelny.xyz/ovelblog/"/>
-    <updated>2017-09-04T00:00:00+02:00</updated>
+    <updated>2018-09-18T00:00:00+02:00</updated>
     <id>https://ovelny.xyz/ovelblog/</id>
     <author>
         <name><![CDATA[Ovelny]]></name>
     </author>
 
+    
+    <entry>
+        <title type="html"><![CDATA[last]]></title>
+        <link href="https://ovelny.xyz/ovelblog/blog/last/"/>
+        <updated>2018-09-18T00:00:00+02:00</updated>
+        <id>https://ovelny.xyz/ovelblog/blog/last/</id>
+        <content type="html"><![CDATA[<p><strong>Last</strong>, from a <em>page</em>!</p>
+<div class="codehilite"><pre><span></span><span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;help&quot;</span>
+</pre></div>]]></content>
+    </entry>
     
     <entry>
         <title type="html"><![CDATA[RSS test]]></title>

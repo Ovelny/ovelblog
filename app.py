@@ -18,10 +18,6 @@ def sorted_by_date(pages: FlatPages) -> List:
     sorted_posts: List = sorted(posts, reverse=True, key=lambda page: page.meta["date"])
     return sorted_posts
 
-"""@app.route("/favicon.ico")
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')"""
-
 
 # :::| homepage with sorted articles |:::
 @app.route("/")

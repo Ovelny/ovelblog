@@ -13,10 +13,10 @@ def parent_dir(path: str) -> str:
 HERE: str = os.path.dirname(os.path.abspath(__file__))
 
 # :::| freezer config |:::
-REPO_NAME: str = "ovelblog"
+# REPO_NAME: str = "ovelblog"
 FREEZER_DESTINATION: str = HERE
 FREEZER_REMOVE_EXTRA_FILES: bool = False
-FREEZER_BASE_URL: str = "https://ovelny.xyz/{0}".format(REPO_NAME)
+FREEZER_BASE_URL: str = "https://ovelny.xyz"
 
 # :::| flatpages config |:::
 DEBUG: bool = True

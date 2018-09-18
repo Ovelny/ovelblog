@@ -3,7 +3,7 @@
     <title><![CDATA[Ovelny]]></title>
     <link href="{{ request.base_url }}" rel="self"/>
     <link href="{{ request.url_root }}"/>
-    <icon>{{ request.host_url[:-1] + url_for('static', filename='favicon.png') }}</icon>
+    <icon>{{ request.host_url[:-1] + url_for('static', filename='favicon.ico') }}</icon>
     <logo>{{ request.host_url[:-1] + url_for('static', filename='images/ovelny-logo.jpg') }}</logo>
     <updated>{{ pages[0].date.strftime("%Y-%m-%d" + "T00:00:00+02:00") }}</updated>
     <id>{{ request.url_root }}</id>

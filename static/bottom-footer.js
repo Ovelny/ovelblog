@@ -1,16 +1,24 @@
 window.onload = function() {
-    var bodyHeight = document.body.offsetHeight;
-    var windowHeight = window.innerHeight;
-    if(bodyHeight > windowHeight) {
+    var
+       bodyHeight = document.body.offsetHeight,
+       windowHeight = window.innerHeight,
+       footer = document.getElementById("footer").style,
+       inline_changes = {
+           position: "absolute",
+           bottom: "0",
+           left: "0",
+           right: "0",
+           margin: "auto auto 1rem auto",
+           width: "inherit",
+           padding: "inherit"
+           }
+
+    if (bodyHeight > windowHeight) {
         return false;
     }
     else {
-        document.getElementById("footer").style.position = "absolute";
-        document.getElementById("footer").style.bottom = "0";
-        document.getElementById("footer").style.left = "0";
-        document.getElementById("footer").style.right = "0";
-        document.getElementById("footer").style.margin = "auto auto 1rem auto";
-        document.getElementById("footer").style.width = "inherit";
-        document.getElementById("footer").style.padding = "inherit";
+        for (var property in inline_changes) {
+            if (property in footer) footer[property] = inline_changes[property];
+        }
     }
 }

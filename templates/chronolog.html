@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="panel" style="border:.05rem solid transparent;">
+        <div class="panel-header text-center">
+            <div class="panel-title h5 mt-10 text-bold">Chronolog</div>
+            <div class="panel-subtitle">Personal stream of events. A quiet, introvert Twitter.</div>
+        </div>
+        <div class="panel-body">
+            {% for log in logs %}
+                <div class="tile">
+                    <div class="tile-content">
+                        <blockquote>
+                            <p class="tile-title text-bold">{{log.log_date}}</p>
+                            <p class="tile-subtitle">{{log.log_content}}</p>
+                        </blockquote>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

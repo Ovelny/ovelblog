@@ -63,7 +63,7 @@ def feed() -> Flask:
 
 
 # :::| chronolog, a personal microblogging page |:::
-@app.route("/chronolog")
+@app.route("/chronolog.html")
 def chronolog() -> Flask:
     chronolog_file = os.path.expanduser("~/code/ovelny.github.io/chronolog.txt")
     logs: List = logs_collection(chronolog_file)

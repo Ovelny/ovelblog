@@ -1,3 +1,4 @@
 2019-08-07T01:01:56.563312+02:00	Hello, world.
 2019-08-07T21:10:44.919171+02:00	Hello, world...\n with a newline?
 2019-08-07T21:11:50.644583+02:00	Hello, world...\n with a newline?
+2019-08-07T21:11:55.895380+02:00	Hello, world...\n with a newline?

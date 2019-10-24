@@ -33,7 +33,7 @@
                 </header>
                 <main>
                 
-    <h2 class="post-title">Easy Tunneling with sshuttle</h2>
+    <h2 class="post-title">Easy tunneling with sshuttle</h2>
         <p><p>Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don't even need to be an admin of the distant server to achieve this. How amazing is that?</p>
 <p>Here's what we want to achieve through SSH tunneling:</p>
 <ul>
@@ -203,7 +203,7 @@ sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
     --dns <span class="se">\</span>
     -e <span class="s2">&quot;sudo -u your-user ssh&quot;</span> <span class="se">\</span>
     --daemon <span class="se">\</span>
-    --pidfile<span class="o">=</span>/home/ovelny/sshuttle.pid <span class="se">\</span>
+    --pidfile<span class="o">=</span>/home/your-user/sshuttle.pid <span class="se">\</span>
     --exclude your-server-ip <span class="se">\</span>
     -r your-user@your-server-ip <span class="m">0</span>/0
 </pre></div>

@@ -13,7 +13,7 @@
 
     
     <entry>
-        <title type="html"><![CDATA[Easy Tunneling with sshuttle]]></title>
+        <title type="html"><![CDATA[Easy tunneling with sshuttle]]></title>
         <link href="https://ovelny.xyz/blog/easy-tunneling-with-sshuttle/"/>
         <updated>2019-10-24T00:00:00+02:00</updated>
         <id>https://ovelny.xyz/blog/easy-tunneling-with-sshuttle/</id>
@@ -186,7 +186,7 @@ sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
     --dns <span class="se">\</span>
     -e <span class="s2">&quot;sudo -u your-user ssh&quot;</span> <span class="se">\</span>
     --daemon <span class="se">\</span>
-    --pidfile<span class="o">=</span>/home/ovelny/sshuttle.pid <span class="se">\</span>
+    --pidfile<span class="o">=</span>/home/your-user/sshuttle.pid <span class="se">\</span>
     --exclude your-server-ip <span class="se">\</span>
     -r your-user@your-server-ip <span class="m">0</span>/0
 </pre></div>
@@ -242,24 +242,6 @@ sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
 
 
 <p>The VPN should now be accessible from almost everywhere.</p>]]></content>
-    </entry>
-    
-    <entry>
-        <title type="html"><![CDATA[Template Test]]></title>
-        <link href="https://ovelny.xyz/blog/template-test/"/>
-        <updated>2018-09-18T00:00:00+02:00</updated>
-        <id>https://ovelny.xyz/blog/template-test/</id>
-        <content type="html"><![CDATA[<p><strong>Hello World</strong>, from a <em>page</em>!
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur ea aliquam laboriosam! Omnis ab adipisci sequi vel veritatis deleniti eveniet unde ex molestiae iusto nihil, magni perferendis ad impedit delectus iste maiores nisi assumenda. Ad deleniti soluta voluptatibus, iusto voluptas vitae sed similique incidunt dolore sapiente autem tenetur doloribus enim mollitia nesciunt nemo molestias qui, officia recusandae inventore accusantium laudantium a minima. Consectetur ab quasi non quis asperiores perspiciatis est, aspernatur debitis, facere ipsum sequi in! Blanditiis, reiciendis. Quibusdam sunt, qui atque repellendus obcaecati vero minus? Ipsam nemo expedita at maxime! Hic possimus, illum similique nobis repellat numquam laboriosam nihil. Provident omnis incidunt recusandae error minima ab quam. Soluta quis dolorem accusamus veniam quibusdam molestias quasi, ullam magni nisi natus autem provident voluptas id? Soluta maxime in tenetur explicabo. Culpa eaque est aspernatur ut totam mollitia necessitatibus, odit dicta eligendi voluptatum doloremque officia, repellendus quae, qui fuga earum fugit modi. Animi, error, nostrum officiis quasi voluptate fugit minima quis optio mollitia quod quia sapiente accusamus. Totam suscipit distinctio vel deleniti dolores, veniam voluptate. Quae, a qui incidunt recusandae, quo blanditiis doloribus eos iure autem illo eligendi maiores at sit! Nemo sed officiis officia earum doloribus, impedit sint, quod delectus quas perspiciatis quaerat! Officiis sequi fugit harum temporibus quidem, esse quasi consectetur corrupti aliquam voluptatem cupiditate voluptate nobis aperiam architecto eaque veniam reprehenderit. Architecto, ratione? Praesentium odio inventore quae officiis placeat ullam ea nihil voluptatibus! Modi aut a provident aperiam deserunt libero accusantium quia explicabo porro nihil, praesentium temporibus eaque voluptas. Numquam est, distinctio sint ipsam sapiente ratione nulla possimus, aliquid qui ab quo! Itaque ratione dolor sunt consequuntur, debitis voluptatem quidem aut possimus commodi totam aliquam hic nemo ut. Illo aperiam, fugit neque ex laborum omnis porro nulla deleniti, nihil in, hic quae! Quibusdam nam expedita asperiores provident accusamus, rem recusandae incidunt! Quo quos quam molestias impedit explicabo doloribus vero. Unde quis sapiente reprehenderit. Ab ipsa provident iste veritatis dolore! Architecto expedita incidunt dolorem, consectetur, obcaecati corporis officiis dolores at perferendis nam numquam ipsa deserunt similique amet consequuntur minima aperiam quia reprehenderit magnam nemo ut blanditiis! Unde ducimus ratione cumque enim dignissimos voluptatum sint libero blanditiis, ipsam dolor facilis molestias, magnam impedit? Quibusdam accusamus quaerat facilis quam sunt dolore sapiente unde aperiam voluptas dolor, nihil porro quasi vel placeat molestias repellendus eaque numquam optio voluptatem nulla. Sapiente repellat earum tempora veniam, quasi velit id delectus ad dolorem ex nam. Temporibus suscipit inventore illum amet modi sed dolor nobis, assumenda id quasi dignissimos ea a? Numquam ipsam rerum exercitationem nisi, dolor alias hic voluptates a deserunt vitae? Possimus ea, quam doloribus molestiae, voluptate deleniti, sequi amet dolore iste dicta quibusdam! Dolorem quibusdam sit praesentium placeat atque soluta nulla nihil hic nemo, impedit iusto libero ratione dolorum magni facere, sunt et in. </p>
-<p>Deleniti facere maxime, facilis nesciunt ipsam animi consequuntur. Architecto qui asperiores assumenda veritatis temporibus! Inventore magnam tempore eos fuga soluta fugit dolore, quis hic laboriosam. Inventore esse quis nam odio vel hic sequi molestiae, ut rerum culpa fuga, eaque quos.</p>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">sorted_by_date</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">FlatPages</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
-    <span class="n">posts</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="p">[</span><span class="n">page</span> <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">pages</span> <span class="k">if</span> <span class="s2">&quot;date&quot;</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">meta</span><span class="p">]</span>
-    <span class="n">sorted_posts</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">posts</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">page</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">sorted_posts</span>
-</pre></div>
-
-
-<p>Inventore magnam tempore eos fuga soluta fugit dolore, quis hic laboriosam. Inventore esse quis nam odio vel hic sequi molestiae, ut rerum culpa fuga, eaque quos.</p>]]></content>
     </entry>
     
 

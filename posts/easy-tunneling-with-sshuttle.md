@@ -1,4 +1,4 @@
-title: Easy Tunneling with sshuttle
+title: Easy tunneling with sshuttle
 date: 2019-10-24
 
 Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don't even need to be an admin of the distant server to achieve this. How amazing is that?
@@ -198,7 +198,7 @@ sshuttle --method=tproxy \
     --dns \
     -e "sudo -u your-user ssh" \
     --daemon \
-    --pidfile=/home/ovelny/sshuttle.pid \
+    --pidfile=/home/your-user/sshuttle.pid \
     --exclude your-server-ip \
     -r your-user@your-server-ip 0/0
 ```

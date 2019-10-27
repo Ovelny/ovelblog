@@ -3,10 +3,10 @@
 {% block content %}
 <p id="about">Hi! This blog is still under construction. You can follow progress and other news on the <a href="/chronolog.html">chronolog stream</a>. See you soon!</p>
     <h2>Posts</h2>
-    <ul class="posts">
+    <ul>
     {% for page in pages %}
         <li>
-            {{ page.date.strftime("%d %b %Y") }} <a class="ml-2" href="{{ url_for('page', path=page.path) }}">{{ page.title }}</a>
+            {{ page.date.strftime("%d %b %Y") }} <a href="{{ url_for('page', path=page.path) }}">{{ page.title }}</a>
         </li>
     {% else %}
         <li>No stuff.</li>

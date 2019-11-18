@@ -1,0 +1,68 @@
+body {
+  margin: 40px auto;
+  max-width: 700px;
+  line-height: 1.6;
+  font-family: "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  text-align: justify;
+  color: rgb(208, 204, 197);
+  padding: 0 10px;
+  background-color: #181a1b;
+}
+
+h1,
+h2,
+h3,
+.chronolog-header {
+  line-height: 1.2;
+  margin: 30px 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+  color: #bdbdff;
+}
+
+a:visited {
+  color: #b987e8;
+}
+
+header {
+  text-align: center;
+}
+
+.chronolog-title {
+  display: inline;
+}
+
+nav > a {
+  margin: 0px 10px;
+}
+
+img.logo {
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 3px rgb(208, 204, 197);
+}
+
+.chronolog {
+  border-style: dashed;
+  border-width: 0px 0px 1px 0px;
+}
+
+code,
+.chronolog-date {
+  font-weight: bold;
+}
+
+code,
+kbd,
+pre,
+samp {
+  overflow: auto;
+  scrollbar-color: #2a2c2e #181a1b;
+}

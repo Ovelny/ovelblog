@@ -1,5 +1,4 @@
-2019-08-07T01:01:56.563312+02:00	Hello, world.
-2019-08-07T22:43:05.657419+02:00	Finishing this blog, which should be done very soon! Making it SEO friendly + creating a custom 404 page atm.
-2019-09-02T16:28:15.050743+02:00	Writing in progress for the first post of this blog: a simple guide to set up DSVPN, in French.
-2019-09-06T21:22:22.063193+02:00	Been porting some scripts in Bash lately, and this is a goldmine: https://github.com/dylanaraps/pure-bash-bible
-2019-10-24T05:01:58.887208+02:00	New article published about sshuttle. I found this solution to be more straightforward than DSVPN, decided to publish in English instead. Still working on finishing this website too!
+07 Aug 2019, 1:01:56 AM	Hello, world.
+02 Sep 2019, 4:28:15 PM	Writing in progress for the first post of this blog: a simple guide to set up DSVPN, in French.
+06 Sep 2019, 9:22:22 PM	Been porting some scripts in Bash lately, and this is a goldmine: https://github.com/dylanaraps/pure-bash-bible
+24 Oct 2019, 5:01:58 AM	New article published about sshuttle. I found this solution to be more straightforward than DSVPN, decided to publish in English instead. Still working on finishing this website too!

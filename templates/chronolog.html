@@ -1,21 +1,16 @@
-{% extends "base.html" %}
-{% block content %}
-    <div>
-        <div>
-            <div>Chronolog</div>
-            <div>Personal stream of events. A quiet, introvert Twitter.</div>
-        </div>
-        <div>
-            {% for log in logs %}
-                <div>
-                    <div>
-                        <blockquote>
-                            <p>{{log.log_date}}</p>
-                            <p>{{log.log_content}}</p>
-                        </blockquote>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+{% extends "base.html" %} {% block content %}
+<header class="chronolog-header">
+  <h2 class="chronolog-title">Chronolog ::</h2>
+  <div class="chronolog-title">
+    Personal stream of events. A quiet, introvert Twitter.
+  </div>
+</header>
+<section>
+  {% for log in logs %}
+  <article class="chronolog">
+    <p class="chronolog-date">{{log.log_date}}</p>
+    <p>{{log.log_content}}</p>
+  </article>
+  {% endfor %}
+</section>
 {% endblock content %}

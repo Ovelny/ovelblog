@@ -1,39 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Ovelny</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Ovelny - Learning Infosec, hacking things, CTFs and random notes">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="/static/pygments.min.css">
-    <link rel=stylesheet type=text/css href="/static/spectre.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Ovelny - Learning Infosec, hacking things, CTFs and various notes" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel=stylesheet type=text/css href="/static/dead-simple.css">
+    <link rel="stylesheet" href="/static/pygments.css">
+    <!--<link rel=stylesheet type=text/css href="/static/spectre.min.css">
     <link rel=stylesheet type=text/css href="/static/spectre-exp.min.css">
-    <link rel=stylesheet type=text/css href="/static/spectre-icons.min.css">
-    <link href="/atom.xml" rel="alternate" title="Ovelny" type="application/atom+xml">
+    <link rel=stylesheet type=text/css href="/static/spectre-icons.min.css">-->
+    <link href="/atom.xml" rel="alternate" title="Ovelny" type="application/atom+xml" />
 </head>
+
 <body>
-    <div class="container">
-        <div class="columns">
-            <div class="column col-5 col-xl-7 col-md-9 col-sm-11 centered text-justify main-block">
-                <header class="navbar">
-                    <a href="/" class="home-link">
-                        <section class="navbar-section">
-                            <img src="/static/images/ovelny-minimal-logo.jpg" alt="Ovelny logo" class="logo s-circle">
-                            <h2>Ovelny</h2>
-                        </section>
-                    </a>
-                    <section class="navbar-section navbar-links">
-                        <a href="/chronolog.html" class="btn btn-link">Chronolog</a>
-                            <a href="https://curiouscat.me/Ovelny" target="_blank" rel="noopener noreferrer" class="btn btn-link">AMA</a>
-                            <a href="https://twitter.com/Ovelny" target="_blank" rel="noopener noreferrer" class="btn btn-link">Twitter</a>
-                            <a href="https://github.com/Ovelny" target="_blank" rel="noopener noreferrer" class="btn btn-link">Github</a>
-                            <a href="/atom.xml" target="_blank" rel="noopener noreferrer" class="btn btn-link">RSS</a>
-                    </section>
-                </header>
-                <main>
-                
-    <h2 class="post-title">Easy tunneling with sshuttle</h2>
+    <header>
+        <a href="/">
+            <section>
+                <img class="logo" src="/static/images/ovelny-minimal-logo.jpg"
+                    alt="Ovelny logo" />
+                <h2>Ovelny</h2>
+            </section>
+        </a>
+        <nav>
+            <a href="/chronolog.html">Chronolog</a>
+            <a href="https://curiouscat.me/Ovelny" target="_blank" rel="noopener noreferrer">AMA</a>
+            <a href="https://twitter.com/Ovelny" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a href="https://github.com/Ovelny" target="_blank" rel="noopener noreferrer">Github</a>
+            <a href="/atom.xml" target="_blank" rel="noopener noreferrer">RSS</a>
+        </nav>
+    </header>
+    <main>
+        
+    <h2>Easy tunneling with sshuttle</h2>
         <p><p>Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don't even need to be an admin of the distant server to achieve this. How amazing is that?</p>
 <p>Here's what we want to achieve through SSH tunneling:</p>
 <ul>
@@ -260,14 +261,11 @@ sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
 
 <p>The VPN should now be accessible from almost everywhere.</p></p>
 
-                </main>
-                <footer id="footer">
-                    <div class="footer-section">© Ovelny</div>
-                    <div class="footer-section">:::| Living for curiosity |:::</div>
-                </footer>
-            </div>
-        </div>
-    </div>
+    </main>
+    <footer id="footer">
+        <div>© Ovelny</div>
+    </footer>
     <script src="/static/bottom-footer.min.js"></script>
 </body>
+
 </html>

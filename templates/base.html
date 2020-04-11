@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Ovelny</title>
+    <title>ovelny</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Ovelny - Learning Infosec, hacking things, CTFs and various notes"
+      content="ovelny - Learning Infosec, hacking things, CTFs and various notes"
     />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <link rel=stylesheet type=text/css href="{{ url_for('static',
@@ -21,7 +21,7 @@
     <link
       href="/atom.xml"
       rel="alternate"
-      title="Ovelny"
+      title="ovelny"
       type="application/atom+xml"
     />
   </head>
@@ -36,7 +36,7 @@
             alt="Ovelny logo"
           />
         </a>
-        <h2><a href="{{ url_for('home') }}">Ovelny</a></h2>
+        <h2><a href="{{ url_for('home') }}">ovelny</a></h2>
       </section>
       <nav>
         <a href="{{ url_for('chronolog') }}">Chronolog</a>
@@ -67,7 +67,8 @@
       {% endblock content %}
     </main>
     <footer id="footer">
-      <div>© Ovelny</div>
+      <div class="footer-section">© ovelny</div>
+      <div class="footer-section">:(){ :|:& };:</div>
     </footer>
     <script src="{{ url_for('static', filename='bottom-footer.min.js') }}"></script>
   </body>

@@ -36,6 +36,10 @@ header {
   text-align: center;
 }
 
+header > section > h2 {
+margin: 20px 0px;
+}
+
 .chronolog-title {
   display: inline;
 }
@@ -65,4 +69,28 @@ pre,
 samp {
   overflow: auto;
   scrollbar-color: #2a2c2e #181a1b;
+}
+
+.codehilite {
+padding: 1px 10px;
+margin: 32px 0px;
+}
+
+footer {
+align-items: stretch;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+max-width: inherit;
+}
+
+footer .footer-section {
+font-size: .8em;
+align-items: center;
+display: flex;
+flex: 1 0 0;
+}
+
+footer .footer-section:not(:first-child):last-child {
+justify-content: flex-end;
 }

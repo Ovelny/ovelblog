@@ -8,7 +8,7 @@ window.onload = function() {
            bottom: "0",
            left: "0",
            right: "0",
-           margin: "auto auto 1rem auto",
+           margin: "inherit",
            width: "inherit",
            padding: "inherit"
            }

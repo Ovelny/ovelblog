@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <title>Ovelny</title>
+    <title>ovelny</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Ovelny - Learning Infosec, hacking things, CTFs and various notes" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <link rel=stylesheet type=text/css href="/static/dead-simple.css">
-    <link rel="stylesheet" href="/static/pygments.css">
-    <!--<link rel=stylesheet type=text/css href="/static/spectre.min.css">
-    <link rel=stylesheet type=text/css href="/static/spectre-exp.min.css">
-    <link rel=stylesheet type=text/css href="/static/spectre-icons.min.css">-->
-    <link href="/atom.xml" rel="alternate" title="Ovelny" type="application/atom+xml" />
-</head>
+    <meta
+      name="description"
+      content="ovelny - Learning Infosec, hacking things, CTFs and various notes"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel=stylesheet type=text/css href="/static/dead-simple.min.css">
+    <link
+      rel="stylesheet"
+      href="/static/pygments.min.css"
+    />
+    <link
+      href="/atom.xml"
+      rel="alternate"
+      title="ovelny"
+      type="application/atom+xml"
+    />
+  </head>
 
-<body>
+  <body>
     <header>
+      <section>
         <a href="/">
-            <section>
-                <img class="logo" src="/static/images/ovelny-minimal-logo.jpg"
-                    alt="Ovelny logo" />
-                <h2>Ovelny</h2>
-            </section>
+          <img
+            class="logo"
+            src="/static/images/ovelny-minimal-logo.jpg"
+            alt="Ovelny logo"
+          />
         </a>
-        <nav>
-            <a href="/chronolog.html">Chronolog</a>
-            <a href="https://curiouscat.me/Ovelny" target="_blank" rel="noopener noreferrer">AMA</a>
-            <a href="https://twitter.com/Ovelny" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a href="https://github.com/Ovelny" target="_blank" rel="noopener noreferrer">Github</a>
-            <a href="/atom.xml" target="_blank" rel="noopener noreferrer">RSS</a>
-        </nav>
+        <h2><a href="/">ovelny</a></h2>
+      </section>
+      <nav>
+        <a href="/chronolog.html">Chronolog</a>
+        <a
+          href="https://curiouscat.me/Ovelny"
+          target="_blank"
+          rel="noopener noreferrer"
+          >AMA</a
+        >
+        <a
+          href="https://twitter.com/Ovelny"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Twitter</a
+        >
+        <a
+          href="https://github.com/Ovelny"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Github</a
+        >
+        <a href="/atom.xml" target="_blank" rel="noopener noreferrer">RSS</a>
+      </nav>
     </header>
     <main>
-        
+      
     <h2>Easy tunneling with sshuttle</h2>
         <p><p>Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don't even need to be an admin of the distant server to achieve this. How amazing is that?</p>
 <p>Here's what we want to achieve through SSH tunneling:</p>
@@ -52,95 +77,95 @@
 <p>First of all, create your droplet on digitalocean. Even if this would work for many linux flavor, this tutorial will use ubuntu. Pick the latest LTS version and choose to create a $5 droplet, which will be more than enough for a proxy.</p>
 <p>Choose to paste your SSH public key to login in the settings. A one time password is hardly secure nor a good idea.</p>
 <p>Once your droplet is up and online, connect with SSH:</p>
-<div class="codehilite"><pre><span></span>ssh root@my-droplet-ip
-</pre></div>
+<div class="codehilite"><pre><span></span><code>ssh root@my-droplet-ip
+</code></pre></div>
 
 
 <p>First thing you should do is updating this freshly created server:</p>
-<div class="codehilite"><pre><span></span>apt-get update
-</pre></div>
+<div class="codehilite"><pre><span></span><code>apt-get update
+</code></pre></div>
 
 
 <p>Then, we should work on disabling root access. Let's create a new user on this server:</p>
-<div class="codehilite"><pre><span></span>adduser your-user
-</pre></div>
+<div class="codehilite"><pre><span></span><code>adduser your-user
+</code></pre></div>
 
 
 <p>Give it a strong password during the creation process. Next, add this user to the sudo group:</p>
-<div class="codehilite"><pre><span></span>usermod -aG sudo your-user
-</pre></div>
+<div class="codehilite"><pre><span></span><code>usermod -aG sudo your-user
+</code></pre></div>
 
 
 <p>And while we're at it, enable ufw (Uncomplicated FireWall). We're gonna use it later on:</p>
-<div class="codehilite"><pre><span></span>ufw <span class="nb">enable</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code>ufw <span class="nb">enable</span>
+</code></pre></div>
 
 
 <p>We wanna connect through SSH with the user we just created. Just as the same way we provided our public key during the droplet creation, we now have to repeat this process for the new user. First, switch from root to the user:</p>
-<div class="codehilite"><pre><span></span>su - your-user
-</pre></div>
+<div class="codehilite"><pre><span></span><code>su - your-user
+</code></pre></div>
 
 
 <p>And then, create a .ssh folder with the appropriate permissions:</p>
-<div class="codehilite"><pre><span></span>mkdir ~/.ssh
+<div class="codehilite"><pre><span></span><code>mkdir ~/.ssh
 chmod <span class="m">700</span> ~/.ssh
-</pre></div>
+</code></pre></div>
 
 
 <p>On your <strong>client</strong> (not the server!), run the following command to get the output of your public key:</p>
-<div class="codehilite"><pre><span></span>cat ~/.ssh/id_rsa.pub
-</pre></div>
+<div class="codehilite"><pre><span></span><code>cat ~/.ssh/id_rsa.pub
+</code></pre></div>
 
 
 <p>Then paste it in the following file on the server:</p>
-<div class="codehilite"><pre><span></span>vim ~/.ssh/authorized_keys
-</pre></div>
+<div class="codehilite"><pre><span></span><code>vim ~/.ssh/authorized_keys
+</code></pre></div>
 
 
 <p>Save the file and exit, and change again the permissions to restrict access to the file:</p>
-<div class="codehilite"><pre><span></span>chmod <span class="m">600</span> ~/.ssh/authorized_keys
-</pre></div>
+<div class="codehilite"><pre><span></span><code>chmod <span class="m">600</span> ~/.ssh/authorized_keys
+</code></pre></div>
 
 
 <p>Now return to the root user:</p>
-<div class="codehilite"><pre><span></span><span class="nb">exit</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
 
 
 <p>The last step with SSH is to edit sshd_config in order to restrict the access via the created user and the corresponding public key:</p>
-<div class="codehilite"><pre><span></span>vim /etc/ssh/sshd_config
-</pre></div>
+<div class="codehilite"><pre><span></span><code>vim /etc/ssh/sshd_config
+</code></pre></div>
 
 
 <p>Look up and change appropriately the following lines in this file. Make sure they are not commented as well (not beginning with <strong>#</strong>):</p>
-<div class="codehilite"><pre><span></span>PasswordAuthentication no
+<div class="codehilite"><pre><span></span><code>PasswordAuthentication no
 PubkeyAuthentication yes
 ChallengeResponseAuthentication no
 PermitRootLogin no
-</pre></div>
+</code></pre></div>
 
 
 <p>We're almost done, but keep in mind that we have to allow incoming SSH connections with ufw:</p>
-<div class="codehilite"><pre><span></span>ufw limit ssh/tcp
-</pre></div>
+<div class="codehilite"><pre><span></span><code>ufw limit ssh/tcp
+</code></pre></div>
 
 
 <p>The <strong>limit</strong> setting here will ban any IP attempting and failing to connect repeatedly. Combined with our changes on sshd_config, this is more than enough to protect this opened port.</p>
 <p>Last step for good measure is upgrading the system and rebooting the server:</p>
-<div class="codehilite"><pre><span></span>apt-get dist-upgrade <span class="o">&amp;&amp;</span> shutdown -r now
-</pre></div>
+<div class="codehilite"><pre><span></span><code>apt-get dist-upgrade <span class="o">&amp;&amp;</span> shutdown -r now
+</code></pre></div>
 
 
 <p>After reboot, make sure that you cannot SSH to the server with root, and connect with the created user instead:</p>
-<div class="codehilite"><pre><span></span>ssh your-user@my-droplet-ip
-</pre></div>
+<div class="codehilite"><pre><span></span><code>ssh your-user@my-droplet-ip
+</code></pre></div>
 
 
 <p>We're 100% done with our server, unless you're interested in the misc part at the end of this article. Let's move on to the client side.</p>
 <h2>Setting up sshuttle</h2>
 <p>Sshuttle is already available on most package managers. On archlinux, you can easily get it with <code>yay</code>:</p>
-<div class="codehilite"><pre><span></span>yay sshuttle
-</pre></div>
+<div class="codehilite"><pre><span></span><code>yay sshuttle
+</code></pre></div>
 
 
 <p>Keep in mind that sshuttle doesn't tunnel UDP traffic (except DNS) by default. A bit of extra work is needed on that part with tproxy, as described in the documentation: <a href="https://sshuttle.readthedocs.io/en/stable/tproxy.html">https://sshuttle.readthedocs.io/en/stable/tproxy.html</a></p>
@@ -148,22 +173,22 @@ PermitRootLogin no
 <ul>
 <li>run the following command as root after booting up:</li>
 </ul>
-<div class="codehilite"><pre><span></span>ip route add <span class="nb">local</span> default dev lo table <span class="m">100</span>
+<div class="codehilite"><pre><span></span><code>ip route add <span class="nb">local</span> default dev lo table <span class="m">100</span>
 ip rule add fwmark <span class="m">1</span> lookup <span class="m">100</span>
 ip -6 route add <span class="nb">local</span> default dev lo table <span class="m">100</span>
 ip -6 rule add fwmark <span class="m">1</span> lookup <span class="m">100</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
 <li>run sshuttle as root with the tproxy method:</li>
 </ul>
-<div class="codehilite"><pre><span></span>sudo <span class="nv">SSH_AUTH_SOCK</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SSH_AUTH_SOCK</span><span class="s2">&quot;</span> sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>sudo <span class="nv">SSH_AUTH_SOCK</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SSH_AUTH_SOCK</span><span class="s2">&quot;</span> sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
                                              --disable-ipv6 <span class="se">\</span>
                                              --dns <span class="se">\</span>
                                              --exclude your-server-ip <span class="se">\</span>
                                              -r your-user@your-server-ip <span class="m">0</span>/0
-</pre></div>
+</code></pre></div>
 
 
 <p>That one is quite a mouthful so let's break it down:</p>
@@ -176,14 +201,14 @@ ip -6 rule add fwmark <span class="m">1</span> lookup <span class="m">100</span>
 <li><code>-r your-user@your-server-ip 0/0</code> finally, where to forward your entire traffic (represented here as 0/0)</li>
 </ul>
 <p>Since ipv6 can leak even with the <code>--disable-ipv6</code> command, let's disable it while using sshuttle. This can be achieved temporarily by running the following commands as root:</p>
-<div class="codehilite"><pre><span></span>sudo sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span><span class="m">1</span>
+<div class="codehilite"><pre><span></span><code>sudo sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span><span class="m">1</span>
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span><span class="m">1</span>
 sudo sysctl -w net.ipv6.conf.lo.disable_ipv6<span class="o">=</span><span class="m">1</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>This is all nice and well but I don't see myself running all of this at each boot, so let's wrap everything we mentioned in a script:</p>
-<div class="codehilite"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
 
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$EUID</span><span class="s2">&quot;</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;This script must be run as root. Exiting.&quot;</span>
@@ -207,7 +232,7 @@ sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
     --pidfile<span class="o">=</span>/home/your-user/sshuttle.pid <span class="se">\</span>
     --exclude your-server-ip <span class="se">\</span>
     -r your-user@your-server-ip <span class="m">0</span>/0
-</pre></div>
+</code></pre></div>
 
 
 <p>Three options have been added here:</p>
@@ -217,55 +242,55 @@ sshuttle --method<span class="o">=</span>tproxy <span class="se">\</span>
 </ul>
 <p>The <code>-e</code> flag will allow you to run the command as your main user and prompt for your ssh passphrase. This will use the right ssh pubkey to connect, even if ssh-agent isn't loaded yet and sshuttle is ran as root.</p>
 <p>Stopping the VPN is easy: just <code>kill</code> the PID given in <code>sshuttle.pid</code>. This can be automated with the following alias, ran as root:</p>
-<div class="codehilite"><pre><span></span><span class="nb">alias</span> <span class="nv">vpndown</span><span class="o">=</span><span class="s2">&quot;kill &#39;</span><span class="k">$(</span>cat /home/your-user/sshuttle.pid<span class="k">)</span><span class="s2">&#39;&quot;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="nb">alias</span> <span class="nv">vpndown</span><span class="o">=</span><span class="s2">&quot;kill &#39;</span><span class="k">$(</span>cat /home/your-user/sshuttle.pid<span class="k">)</span><span class="s2">&#39;&quot;</span>
+</code></pre></div>
 
 
 <p>You should now be all set, just by adding the previous script in your <code>$PATH</code>.</p>
 <h2>Misc: accessing the VPN when the SSH port is blocked</h2>
 <p>If you want to connect on WiFi hotspots, you might want to change the SSH port to 443 on your server as it is nearly guaranteed to be always opened, no matter how strict the WiFi's firewall is.</p>
 <p>We have to change SSH's default port on our server:</p>
-<div class="codehilite"><pre><span></span>vim /etc/ssh/sshd_config
-</pre></div>
+<div class="codehilite"><pre><span></span><code>vim /etc/ssh/sshd_config
+</code></pre></div>
 
 
 <p>Find and change the following line accordingly. Uncomment it if necessary:</p>
-<div class="codehilite"><pre><span></span>Port 443
-</pre></div>
+<div class="codehilite"><pre><span></span><code>Port 443
+</code></pre></div>
 
 
 <p>One thing left now is to change ufw rules on your server to open that port:</p>
-<div class="codehilite"><pre><span></span>sudo ufw limit in <span class="m">443</span>/tcp
-</pre></div>
+<div class="codehilite"><pre><span></span><code>sudo ufw limit in <span class="m">443</span>/tcp
+</code></pre></div>
 
 
 <p>Don't forget to remove port 22 on ufw:</p>
-<div class="codehilite"><pre><span></span>sudo ufw status numbered
-</pre></div>
+<div class="codehilite"><pre><span></span><code>sudo ufw status numbered
+</code></pre></div>
 
 
 <p>Delete related rules with their IDs:</p>
-<div class="codehilite"><pre><span></span>sudo ufw delete &lt;rule-id-here&gt;
-</pre></div>
+<div class="codehilite"><pre><span></span><code>sudo ufw delete &lt;rule-id-here&gt;
+</code></pre></div>
 
 
 <p>Now restart the sshd service:</p>
-<div class="codehilite"><pre><span></span>sudo service sshd restart
-</pre></div>
+<div class="codehilite"><pre><span></span><code>sudo service sshd restart
+</code></pre></div>
 
 
 <p>Now, the only thing left is to specify the 443 port in the sshuttle script:</p>
-<div class="codehilite"><pre><span></span>-r your-user@your-server-ip:443 0/0
-</pre></div>
+<div class="codehilite"><pre><span></span><code>-r your-user@your-server-ip:443 0/0
+</code></pre></div>
 
 
 <p>The VPN should now be accessible from almost everywhere.</p></p>
 
     </main>
     <footer id="footer">
-        <div>© Ovelny</div>
+      <div class="footer-section">© ovelny</div>
+      <div class="footer-section">:(){ :|:& };:</div>
     </footer>
     <script src="/static/bottom-footer.min.js"></script>
-</body>
-
+  </body>
 </html>

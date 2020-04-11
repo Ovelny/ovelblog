@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title><![CDATA[Ovelny]]></title>
+    <title><![CDATA[ovelny]]></title>
     <link href="{{ request.base_url }}" rel="self"/>
     <link href="{{ request.url_root }}"/>
     <icon>{{ request.host_url[:-1] + url_for('static', filename='favicon.ico') }}</icon>
@@ -8,7 +8,7 @@
     <updated>{{ pages[0].date.strftime("%Y-%m-%d" + "T00:00:00+02:00") }}</updated>
     <id>{{ request.url_root }}</id>
     <author>
-        <name><![CDATA[Ovelny]]></name>
+        <name><![CDATA[ovelny]]></name>
     </author>
 
     {% for page in pages %}

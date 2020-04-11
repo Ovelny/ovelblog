@@ -16,6 +16,8 @@
 .codehilite .gd { color: #f92672 } /* Generic.Deleted */
 .codehilite .ge { font-style: italic } /* Generic.Emph */
 .codehilite .gi { color: #a6e22e } /* Generic.Inserted */
+.codehilite .go { color: #66d9ef } /* Generic.Output */
+.codehilite .gp { color: #f92672; font-weight: bold } /* Generic.Prompt */
 .codehilite .gs { font-weight: bold } /* Generic.Strong */
 .codehilite .gu { color: #75715e } /* Generic.Subheading */
 .codehilite .kc { color: #66d9ef } /* Keyword.Constant */

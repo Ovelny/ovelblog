@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-import csv
 from flask_frozen import Freezer
 from flask_flatpages import FlatPages, pygments_style_defs
 from flask import Flask, render_template, make_response, send_from_directory

@@ -4,7 +4,7 @@ import os
 import sys
 from flask_frozen import Freezer
 from flask_flatpages import FlatPages, pygments_style_defs
-from flask import Flask, render_template, make_response, send_from_directory
+from flask import Flask, render_template, make_response
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -55,7 +55,7 @@ def feed():
     sorted_posts = sorted_by_date(pages)
     template = render_template("atom.xml", pages=sorted_posts)
     response = make_response(template)
-    response.headers["Content-Type"] = "text/xml"
+    response.headers["Content-Type"] = "application/xml"
     return response
 
 

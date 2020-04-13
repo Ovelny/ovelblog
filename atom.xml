@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title><![CDATA[ovelny]]></title>
-    <link href="https://ovelny.xyz/atom.xml" rel="self"/>
-    <link href="https://ovelny.xyz/"/>
-    <icon>https://ovelny.xyz/static/favicon.ico</icon>
-    <logo>https://ovelny.xyz/static/images/ovelny-minimal-logo.jpg</logo>
+    <link href="https://ovelny.sh/atom.xml" rel="self"/>
+    <link href="https://ovelny.sh/"/>
+    <icon>https://ovelny.sh/static/favicon.ico</icon>
+    <logo>https://ovelny.sh/static/images/ovelny-minimal-logo.jpg</logo>
     <updated>2019-10-24T00:00:00+02:00</updated>
-    <id>https://ovelny.xyz/</id>
+    <id>https://ovelny.sh/</id>
     <author>
         <name><![CDATA[ovelny]]></name>
     </author>
@@ -14,9 +14,9 @@
     
     <entry>
         <title type="html"><![CDATA[Easy tunneling with sshuttle]]></title>
-        <link href="https://ovelny.xyz/blog/easy-tunneling-with-sshuttle/"/>
+        <link href="https://ovelny.sh/blog/easy-tunneling-with-sshuttle/"/>
         <updated>2019-10-24T00:00:00+02:00</updated>
-        <id>https://ovelny.xyz/blog/easy-tunneling-with-sshuttle/</id>
+        <id>https://ovelny.sh/blog/easy-tunneling-with-sshuttle/</id>
         <content type="html"><![CDATA[<p>Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don't even need to be an admin of the distant server to achieve this. How amazing is that?</p>
 <p>Here's what we want to achieve through SSH tunneling:</p>
 <ul>

@@ -90,6 +90,7 @@ font-size: .8em;
 align-items: center;
 display: flex;
 flex: 1 0 0;
+text-align: left;
 }
 
 footer .footer-section:not(:first-child):last-child {

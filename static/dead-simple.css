@@ -10,6 +10,7 @@ body {
   color: rgb(208, 204, 197);
   padding: 0 10px;
   background-color: #181a1b;
+  overflow-x: hidden;
 }
 
 h1,

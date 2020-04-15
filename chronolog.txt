@@ -2,3 +2,6 @@
 02 Sep 2019, 4:28:15 PM	Writing in progress for the first post of this blog: a simple guide to set up DSVPN, in French.
 06 Sep 2019, 9:22:22 PM	Been porting some scripts in Bash lately, and this is a goldmine: https://github.com/dylanaraps/pure-bash-bible
 24 Oct 2019, 5:01:58 AM	New article published about sshuttle. I found this solution to be more straightforward than DSVPN, decided to publish in English instead. Still working on finishing this website too!
+2020-04-15T12:17:38.453036+02:00	I finally took time to finish this blog, quite happy with the result! Efficient and minimalist, less than 100 LOCs for generating static pages with Flask. Some things are still WIP, but it's good enough to finally publish my things.
+2020-04-15T12:18:12.192457+02:00	I finally took time to finish this blog, quite happy with the result! Efficient and minimalist, less than 100 LOCs for generating static pages with Flask. Some things are still WIP, but it's good enough to finally publish my things.
+2020-04-15T12:18:36.085214+02:00	I finally took time to finish this blog, quite happy with the result! Efficient and minimalist, less than 100 LOCs for generating static pages with Flask. Some things are still WIP, but it's good enough to finally publish my things.

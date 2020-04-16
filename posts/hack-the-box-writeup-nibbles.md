@@ -7,50 +7,50 @@ As with everything, let’s start with enumeration on this target. A full nmap s
 The target's address (http://10.10.10.75) just leads to a "hello world" HTML page. By checking the source code however, we can see an HTML comment leading to another critical piece present on this target : a CMS called nibbleblog.
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542053507_1.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542053507_1.png)
 
 
 Browsing [http://10.10.10.75/nibbleblog](http://10.10.10.75/nibbleblog) leads us to the homepage of the blog, which contains nothing of value. Or does it?
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542088176_2.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542088176_2.png)
 
 
 Pretty strange that an image would have a .php extension indeed. Searching for vulns related to nibbleblog quickly leads to a related CVE: CVE-2015-6967
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542107275_3.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542107275_3.png)
 
 
 And indeed, following the mentioned URL on our target leads to something worthwhile:
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542126158_4.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542126158_4.png)
 
 
 We can go through all parent directories from this URL, even though they're supposed to remain private. Does it mean that other directories are exposed?
 Yes, yes it does.
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542164787_5.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542164787_5.png)
 
 
 Let's explore. The /admin/boot/rules/ path gives us a set of rules and settings related to the CMS, one of them confirming that this version of nibbleblog is indeed absolutely vulnerable, according to all the CVEs found earlier:
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542188280_6.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542188280_6.png)
 
 
 Looking back to the /content directories, we can also see that the admin's username is indeed... admin.
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542205151_7.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542205151_7.png)
 
 
 We could fire up hydra to get access to the dashboard, but a blacklist system exists in this CMS, which would make bruteforcing worthless for us:
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542241708_8.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542241708_8.png)
 
 
 At this point I honestly got lost: even if the CMS' config and settings are widely exposed, there is nothing that could gives us the admin's password. Which we need to make use of that CVE later on!
@@ -70,14 +70,14 @@ Here are the steps to follow:
 For this purpose I used the following web shell, nice and simple: [https://github.com/nickola/web-console](https://github.com/nickola/web-console)
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542282386_9.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542282386_9.png)
 
 
 The user flag can now be reached: **b02ff32bb332deba49eeaed21152c8d8**
 For the root one, we're gonna need some additional privesc. Running **sudo -l** yields something interesting:
 
 
-![](https://paper-attachments.dropbox.com/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542321101_10.png)
+![](https://ovelny.sh/static/images/hack-the-box-writeup-nibbless_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542321101_10.png)
 
 
 Our current user can run **monitor.sh** at the given path as sudo without any password! We just need to make that script outputs the root flag and we will be done:

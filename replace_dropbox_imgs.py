@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import re
+import config
 import urllib.request
 
 """
@@ -39,7 +40,7 @@ def dirname(filename):
 
 def set_img_dir_by_post(filename):
     if not os.path.isdir(img_dir(dirname(filename))):
-        os.mkdir(img_dir)
+        os.mkdir(img_dir(dirname(filename)))
 
 
 def download_imgs(filename, imgs):
@@ -62,7 +63,7 @@ def get_img_links_in_post(filepath):
 
 
 def replace_img_links_in_post(filepath, filename):
-    new_img_path = os.path.join(img_dir(dirname(filename)), "")
+    new_img_path = os.path.join(config.FREEZER_BASE_URL, img_dir(dirname(filename)))
     with open(filepath, "r") as f:
         filedata = f.read()
     filedata = filedata.replace(dropbox_base_url, new_img_path)

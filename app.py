@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import replace_dropbox_imgs
 from flask_frozen import Freezer
 from flask_flatpages import FlatPages, pygments_style_defs
 from flask import Flask, render_template, make_response
@@ -84,5 +85,6 @@ def page(path):
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "build":
         freezer.freeze()
+        replace_dropbox_imgs.replace()
     else:
         app.run()

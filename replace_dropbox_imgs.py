@@ -63,7 +63,7 @@ def get_img_links_in_post(filepath):
 
 
 def replace_img_links_in_post(filepath, filename):
-    new_img_path = os.path.join(config.FREEZER_BASE_URL, img_dir(dirname(filename)))
+    new_img_path = os.path.join(config.FREEZER_BASE_URL, img_dir(dirname(filename)), "")
     with open(filepath, "r") as f:
         filedata = f.read()
     filedata = filedata.replace(dropbox_base_url, new_img_path)

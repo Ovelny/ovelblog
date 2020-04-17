@@ -33,6 +33,10 @@ p#about {
   hyphens: none;
 }
 
+li {
+  text-align: left;
+}
+
 a {
   text-decoration: none;
 }

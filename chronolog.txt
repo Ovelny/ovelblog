@@ -3,3 +3,5 @@
 06 Sep 2019, 9:22:22 PM	Been porting some scripts in Bash lately, and this is a goldmine: https://github.com/dylanaraps/pure-bash-bible
 24 Oct 2019, 5:01:58 AM	New article published about sshuttle. I found this solution to be more straightforward than DSVPN, decided to publish in English instead. Still working on finishing this website too!
 15 Apr 2020, 12:38:49 PM	I finally took time to finish this blog, quite happy with the result! Efficient and minimalist, less than 100 LOCs for generating static pages with Flask. Some things are still WIP, but it's good enough to finally publish my things.
+2020-04-18T00:25:12.949557+02:00	Making additional progress with the blog, mainly with the build process: I can now dump everything I write on dropbox paper right here, by automatically downloading all images and converting dropbox URLs to local ones. Neat.
+2020-04-18T00:25:35.529418+02:00	Making additional progress with the blog, mainly with the build process: I can now dump everything I write on dropbox paper right here, by automatically downloading all images and converting dropbox URLs to local ones. Neat.

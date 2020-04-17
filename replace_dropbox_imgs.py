@@ -24,7 +24,7 @@ img_base_path = "static/images"
 
 def img_dir(dirname):
     """
-    Return the full path of the image directory
+    Return the relative path of the image directory
     for the related post
     """
     return os.path.join(img_base_path, dirname)

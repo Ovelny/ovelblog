@@ -11,6 +11,12 @@ body {
   padding: 0 10px;
   background-color: #181a1b;
   overflow-x: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 
 h1,
@@ -19,6 +25,12 @@ h3,
 .chronolog-header {
   line-height: 1.2;
   margin: 30px 0px;
+}
+
+p#about {
+  overflow-wrap: normal;  
+  word-wrap: normal;
+  hyphens: none;
 }
 
 a {
@@ -104,7 +116,7 @@ max-width: inherit;
 }
 
 footer .footer-section {
-font-size: .8em;
+font-size: .7em;
 align-items: center;
 display: flex;
 flex: 1 0 0;

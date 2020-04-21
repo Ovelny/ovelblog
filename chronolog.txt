@@ -4,3 +4,4 @@
 24 Oct 2019, 5:01:58 AM	New article published about sshuttle. I found this solution to be more straightforward than DSVPN, decided to publish in English instead. Still working on finishing this website too!
 15 Apr 2020, 12:38:49 PM	I finally took time to finish this blog, quite happy with the result! Efficient and minimalist, less than 100 LOCs for generating static pages with Flask. Some things are still WIP, but it's good enough to finally publish my things.
 18 Apr 2020, 12:34:46 AM	Making additional progress with the blog, mainly with the build process: I can now dump everything I write on dropbox paper right here, by automatically downloading all images and converting dropbox URLs to local ones. Neat.
+21 Apr 2020, 1:11:18 PM	Currently reading 'Learn Bash The Hard Way' by Ian Miell to relearn some basics. The format and mandatory exercises are really nice and straightforward.

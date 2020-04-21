@@ -20,14 +20,15 @@ to my blog, seamlessly.
 
 dropbox_base_url = "https://paper-attachments.dropbox.com/"
 img_base_path = "static/images"
+here = os.path.dirname(os.path.realpath(__file__))
 
 
 def img_dir(dirname):
     """
-    Return the relative path of the image directory
+    Return the absolute path of the image directory
     for the related post
     """
-    return os.path.join(img_base_path, dirname)
+    return os.path.join(here, img_base_path, dirname)
 
 
 def dirname(filename):
@@ -72,9 +73,9 @@ def replace_img_links_in_post(filepath, filename):
 
 
 def replace():
-    for filename in os.listdir("posts"):
+    for filename in os.listdir(os.path.join(here, "posts")):
         if filename.endswith(".md"):
-            filepath = f"posts/{filename}"
+            filepath = os.path.join(here, "posts", filename)
             set_img_dir_by_post(filename)
             imgs = get_img_links_in_post(filepath)
             download_imgs(filename, imgs)

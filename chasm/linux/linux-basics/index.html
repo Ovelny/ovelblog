@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ovelny - Linux basics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ovelny - Personal notes on learning infosec, penetration testing, programming and others"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" type=text/css href="/assets/css/dead-simple.min.css">
+    <link rel="stylesheet" type=text/css href="/assets/css/rouge.min.css">
+    <link
+      href="/atom.xml"
+      rel="alternate"
+      title="ovelny"
+      type="application/atom+xml"
+    />
+  </head>
+  <body>
+
+    <header>
+      <section>
+        <a href="/chasm/">
+          <img
+            class="logo"
+            src="/assets/images/chasm.jpg"
+            alt="chasm logo"
+          />
+        </a>
+        <h2><a href="/chasm/">chasm</a></h2>
+      </section>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/chasm/about/">About</a>
+      </nav>
+    </header>
+
+    <main>
+        <h2>Linux basics</h2>
+      <p>This chapter is an attempt to summarize everything there is to know about Linux, particularly terminal commands, file permissions, groups and users.</p>
+
+<p>Everything here should be enough to manage the OS from the CLI at a basic level.</p>
+
+<h2>The shell, aka your best friend</h2>
+
+<p>The shell will be your best ally for anything Linux. At first using it might seem slower and less practical than the GUI, but after a while everything starts to make sense and your productivity will improve dramatically.</p>
+
+<p>The configuration file for the bash shell can be found at <code>~/.bashrc</code>, <code>~</code> being just a shorthand for your home folder.</p>
+
+<p>Don&#39;t forget that you can autocomplete any command by pressing tab halfway through it.</p>
+
+<h2>Basic commands</h2>
+
+<h3>Navigation</h3>
+
+<p><code>pwd</code> - Return the absolute path of your current location</p>
+
+<p><code>ls &lt;path&gt;</code> - List the content of the current folder, or path if provided. Note that you can also use <code>ll</code> to list the detailed infos about files and directories.</p>
+
+<p><code>cd &lt;path&gt;</code> - Go to specified path (without path, go back to user&#39;s <code>home</code>)</p>
+
+<h3>File manipulation</h3>
+
+<p><code>touch &lt;filename&gt;</code> - Create a file with specified title + extension</p>
+
+<p><code>mkdir &lt;dirname&gt;</code> - Create a directory in current location with specified dirname</p>
+
+<p><code>cat &lt;file path&gt;</code> - Output the content of a file on terminal</p>
+
+<p><code>stat &lt;file path&gt;</code> - Provide detailed info about the file (owner, permissions, last modification date, etc...)</p>
+
+<p><code>file &lt;file path&gt;</code> - Show some basic info about the file (type)</p>
+
+<p><code>nano &lt;file path&gt;</code> - Open file in nano (text editor)</p>
+
+<p><code>mv &lt;location&gt; &lt;destination&gt;</code> - Move a file to specified destination</p>
+
+<p><code>cp &lt;location&gt; &lt;destination&gt;</code> - Copy a file to specified destination</p>
+
+<p><code>grep &lt;search string&gt; &lt;file path&gt;</code> - Search for a string in specified file</p>
+
+<p><code>rm &lt;file or directory path&gt;</code> - Delete file or directory. If directory, the <code>-r</code> (recursive) flag must be added, optionally with <code>-f</code> (force, no confirmation)</p>
+
+<h3>Data manipulation</h3>
+
+<p>You don&#39;t necessarily have to open a file in nano / vim / any other text editor to manipulate or filter the data inside. You can pipe the output of <code>cat</code>, or any other command for that matter, with <code>|</code>. Piping the output means that we can send it in another bash command as input to manipulate or filter it. Here are a few examples:</p>
+
+<p><code>cat &lt;file&gt; | grep mything</code> - will filter all lines of <code>&lt;file&gt;</code> and outputs only those containing a <code>mything</code> string</p>
+
+<p><code>cat &lt;file&gt; | cut -d &quot; &quot; -f 1</code> - Cut the output with space as a delimiter, and returns only the first filtered element per line</p>
+
+<p><code>cat &lt;file&gt; | sort -u</code> - Only returns unique lines, remove duplicates</p>
+
+<h3>Output redirection</h3>
+
+<p>You can redirect the output of any program to any file: the file can be already present or created on the go, depending on where you redirect the output.</p>
+
+<p><code>echo hi &gt; output</code> - Redirect &quot;hi&quot; to the file <code>output</code> in the current location. Overwrites file with that output if already existing</p>
+
+<p><code>echo hi &gt;&gt; output</code> - Append &quot;hi&quot; to the file <code>output</code> in the current location. Preserves content of the file if it already exists</p>
+
+<h2>Permissions</h2>
+
+<p>Permissions can only be a mix of 3 things:</p>
+
+<ul>
+<li><strong>r</strong>ead: being able to open the file</li>
+<li><strong>w</strong>rite: being able to edit the file</li>
+<li>e*<em>x</em>*ecute: being able to execute the file, such as a shell script</li>
+</ul>
+
+<p>This may sound obvious for files, but the same permissions are quite different for directories:</p>
+
+<ul>
+<li><strong>r</strong>ead: list the content of the directory</li>
+<li><strong>w</strong>rite: add or remove files in the directory</li>
+<li>e*<em>x</em>*ecute: list informations about the files in the directory</li>
+</ul>
+
+<p>Those permissions are also represented in octal notation, each number allowing / restricting a specific set of actions:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Number</th>
+<th style="text-align: left">Read</th>
+<th style="text-align: left">Write</th>
+<th style="text-align: left">Execute</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">0</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">no</td>
+</tr>
+<tr>
+<td style="text-align: left">1</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">yes</td>
+</tr>
+<tr>
+<td style="text-align: left">2</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">no</td>
+</tr>
+<tr>
+<td style="text-align: left">3</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">yes</td>
+</tr>
+<tr>
+<td style="text-align: left">4</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">no</td>
+</tr>
+<tr>
+<td style="text-align: left">5</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">no</td>
+<td style="text-align: left">yes</td>
+</tr>
+<tr>
+<td style="text-align: left">6</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">no</td>
+</tr>
+<tr>
+<td style="text-align: left">7</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">yes</td>
+</tr>
+</tbody></table>
+
+<p>Permissions are also defined by users and groups. To change permissions, you can run the following:</p>
+
+<p><code>chmod 750 &lt;file&gt;</code> - Each digit here defines a permission for a category: from left to right, owner, group, and everyone else.</p>
+
+<p>You might think that this would be hard to memorize, but there is an easier way. Each permission in fact, is represented by a number in octal notation:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Permission</th>
+<th style="text-align: left">Number</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">read</td>
+<td style="text-align: left">4</td>
+</tr>
+<tr>
+<td style="text-align: left">write</td>
+<td style="text-align: left">2</td>
+</tr>
+<tr>
+<td style="text-align: left">execute</td>
+<td style="text-align: left">1</td>
+</tr>
+<tr>
+<td style="text-align: left">no access</td>
+<td style="text-align: left">0</td>
+</tr>
+</tbody></table>
+
+<p>Want to give your user read + write permissions? That&#39;s 6 (4 + 2). Want to give it read and execute only? That&#39;s 5.</p>
+
+<p>There is also another way to modify permissions, arguably easier to remember as it is more verbose:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Category</th>
+<th style="text-align: left">Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">u</td>
+<td style="text-align: left">user (file / directory owner)</td>
+</tr>
+<tr>
+<td style="text-align: left">g</td>
+<td style="text-align: left">group owner</td>
+</tr>
+<tr>
+<td style="text-align: left">o</td>
+<td style="text-align: left">others (everyone else)</td>
+</tr>
+<tr>
+<td style="text-align: left">a</td>
+<td style="text-align: left">all ( u + g + o, all at once)</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Permission</th>
+<th style="text-align: left">Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">r</td>
+<td style="text-align: left">read</td>
+</tr>
+<tr>
+<td style="text-align: left">w</td>
+<td style="text-align: left">write</td>
+</tr>
+<tr>
+<td style="text-align: left">x</td>
+<td style="text-align: left">execute</td>
+</tr>
+</tbody></table>
+
+<p>Examples with this notation:</p>
+
+<p><code>chmod u+x &lt;file&gt;</code> - Add execute permission for the user</p>
+
+<p><code>chmod u-x &lt;file&gt;</code> - Remove execute permission for the user</p>
+
+<p><code>chmod a+x &lt;file&gt;</code> - Add execute permission for everyone (can also be added with <code>+x &lt;file&gt;</code> as a shorthand)</p>
+
+<p><code>chmod go=rw &lt;file&gt;</code> - Add read and write permissions for group owner and others, but removes all other permissions for those categories (execute in that case)</p>
+
+<p>You can also chain specifications in a single command, which allows you to set specific permissions at once just like octal notation allows you to:</p>
+
+<p><code>chmod 750 &lt;file&gt;</code> is the same as <code>chmod u+rwx,g+rx,o-rwx &lt;file&gt;</code></p>
+
+<h2>IP addressing and netcat</h2>
+
+<p>The CLI is also your best friend for managing every part of your network, specifically analyzing it. Here is a short overview of the main tools you can use for that purpose.</p>
+
+<h3>ifconfig</h3>
+
+<p>Typing <code>ifconfig</code> pulls out the infos about your network interface. This is typically what you will use to know what your IP address is, your localhost address, your mask, etc. It also provides various performance details for each category, like your packet loss rate or collision rate.</p>
+
+<h3>networking service</h3>
+
+<p>If you edit your network&#39;s configuration files, say to set up a static IP address, you will have to restart the networking service in order to apply your changes. This can be done with <code>service networking restart</code>. The <code>service</code> command provides of course a lot of options that you can check out with <code>man service</code>.</p>
+
+<h3>ping</h3>
+
+<p>The most basic command, and one you will use a lot. This allows you to ping any address (either domain notation or literal IP), and check if any packet is received in return. It&#39;s also useful to check out the performance of your connection. Here is an example of the typical output:</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; ping google.com
+PING google.com (216.58.211.110) 56(84) bytes of data.
+64 bytes from ams15s32-in-f14.1e100.net (216.58.211.110): icmp_seq=1 ttl=56 time=60.4 ms
+64 bytes from ams15s32-in-f14.1e100.net (216.58.211.110): icmp_seq=2 ttl=56 time=61.2 ms
+64 bytes from ams15s32-in-f14.1e100.net (216.58.211.110): icmp_seq=3 ttl=56 time=59.8 ms
+64 bytes from ams15s32-in-f14.1e100.net (216.58.211.110): icmp_seq=4 ttl=56 time=60.5 ms
+64 bytes from ams15s32-in-f14.1e100.net (216.58.211.110): icmp_seq=5 ttl=56 time=60.0 ms
+--- google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 9ms
+rtt min/avg/max/mdev = 59.796/60.384/61.171/0.565 ms
+</code></pre></div>
+
+<h3>netcat</h3>
+
+<p>TCP/IP swiss army knife, as described by running <code>man netcat</code>. Manages TCP/IP connections in any way you want. You will typically use it to listen or connect to any given port, for example with the following commands:</p>
+
+<p><code>nc -lvp 1234</code> - Listen to port 1234</p>
+
+<p><code>nc &lt;IP address&gt; 1234</code> - Connect to port 1234</p>
+
+<p>You can also execute a program that will interpret the commands sent to the port that netcat will listen to. For example, let&#39;s use bash to interpret the output:</p>
+
+<p><code>nc -lvp 1234 -e /bin/bash</code> - Listen to port 1234 and uses bash to interpret anything received with that port</p>
+
+<p>If you connect to that port and type <code>whoami</code> (command supposed to return the current user), the text will get interpreted and you will get that info back. You can imagine how bad that could be from a security standpoint, if a poorly secured server let you in with root access that way.</p>
+
+<p><a href="https://www.sans.org/security-resources/sec560/netcat_cheat_sheet_v1.pdf" rel="nofollow">Cheatsheet for more elaborate commands with netcat</a></p>
+
+<h2>Automating with cron</h2>
+
+<p>cron is a daemon: a background process running on its own, without any interaction required. Its purpose is to add jobs that you want to run automatically: a Python script, a series of shell scripts, a program already installed, etc.</p>
+
+<p>It&#39;s particularly useful as a pentester at some point. Managing jobs depends of your Linux distro, but adding a job and managing it works with the following in most cases:</p>
+
+<ul>
+<li>go to etc: <code>cd /etc</code></li>
+<li>check if cron is present by running <code>ls | grep cron</code>: you should see a series of cron files like <code>cron.d</code>, <code>cron.daily</code>, <code>cron.hourly</code>...</li>
+<li>any file you put in those directories will run according to the description</li>
+<li>wanna add a specific rule, like running something every 2 days or only a specific day of the week? You can edit <code>/etc/crontab</code> to add another rule among the <strong>hourly</strong>, <strong>daily</strong>, etc, by adding another line with the following fields:</li>
+</ul>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Field</th>
+<th style="text-align: left">Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">m - minute</td>
+<td style="text-align: left">0 through 59</td>
+</tr>
+<tr>
+<td style="text-align: left">h - hour</td>
+<td style="text-align: left">0 through 23</td>
+</tr>
+<tr>
+<td style="text-align: left">dom - day of month</td>
+<td style="text-align: left">1 through 31</td>
+</tr>
+<tr>
+<td style="text-align: left">mon - month</td>
+<td style="text-align: left">1 through 12</td>
+</tr>
+<tr>
+<td style="text-align: left">dow - day of week</td>
+<td style="text-align: left">0 through 7 (0 or 7 is Sunday, 1 is Monday, etc., or use names)</td>
+</tr>
+<tr>
+<td style="text-align: left">user</td>
+<td style="text-align: left">user executing the following command</td>
+</tr>
+<tr>
+<td style="text-align: left">command</td>
+<td style="text-align: left">complete sequence of commands to be executed for the job</td>
+</tr>
+</tbody></table>
+
+<p>If a time field has no value but <code>*</code>, it means that the program will be executed for every unit of that field. For example, <code>* * * * * &lt;user&gt; &lt;command&gt;</code> will run a command for every minute.</p>
+
+<ul>
+<li>once you&#39;re done, run <code>service cron restart</code> to apply your changes</li>
+</ul>
+
+    </main>
+    <footer id="footer">
+        <div class="footer-section">Copyright © 2019 - 2020 ovelny</div>
+      <div class="footer-section">:(){ :|:& };:</div>
+    </footer>
+    <script src="/assets/js/bottom-footer.min.js"></script>
+  </body>
+</html>
+

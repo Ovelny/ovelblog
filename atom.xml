@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="http://127.0.0.1:3000/">
+  <id>http://127.0.0.1:3000/</id>
+  <title>ovelny</title>
+  <updated>2020-04-14T22:00:00Z</updated>
+  <link rel="alternate" href="http://127.0.0.1:3000/" type="text/html"/>
+  <link rel="self" href="http://127.0.0.1:3000/atom.xml" type="application/atom+xml"/>
+  <author>
+    <name>ovelny</name>
+    <uri>https://ovelny.sh</uri>
+  </author>
+  <entry>
+    <id>tag:127.0.0.1:3000,2020-04-14:/blog/hack-the-box-writeup-nibbles/</id>
+    <title type="html">Hack The Box writeup: Nibbles</title>
+    <published>2020-04-14T22:00:00Z</published>
+    <updated>2020-04-14T22:00:00Z</updated>
+    <link rel="alternate" href="http://127.0.0.1:3000/blog/hack-the-box-writeup-nibbles/" type="text/html"/>
+    <content type="html">&lt;h2&gt;Full walkthrough&lt;/h2&gt;
+
+&lt;p&gt;As with everything, let’s start with enumeration on this target. A full nmap scan doesn&amp;#39;t expose much with this box: only the SSH and HTTP ports are open, the latter being used by apache.&lt;br&gt;
+The target&amp;#39;s address (&lt;a href="http://10.10.10.75" rel="nofollow"&gt;http://10.10.10.75&lt;/a&gt;) just leads to a &amp;quot;hello world&amp;quot; HTML page. By checking the source code however, we can see an HTML comment leading to another critical piece present on this target : a CMS called nibbleblog.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542053507_1.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Browsing &lt;a href="http://10.10.10.75/nibbleblog" rel="nofollow"&gt;http://10.10.10.75/nibbleblog&lt;/a&gt; leads us to the homepage of the blog, which contains nothing of value. Or does it?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542088176_2.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Pretty strange that an image would have a .php extension indeed. Searching for vulns related to nibbleblog quickly leads to a related CVE: CVE-2015-6967&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542107275_3.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;And indeed, following the mentioned URL on our target leads to something worthwhile:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542126158_4.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;We can go through all parent directories from this URL, even though they&amp;#39;re supposed to remain private. Does it mean that other directories are exposed?&lt;br&gt;
+Yes, yes it does.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542164787_5.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s explore. The /admin/boot/rules/ path gives us a set of rules and settings related to the CMS, one of them confirming that this version of nibbleblog is indeed absolutely vulnerable, according to all the CVEs found earlier:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542188280_6.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Looking back to the /content directories, we can also see that the admin&amp;#39;s username is indeed... admin.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542205151_7.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;We could fire up hydra to get access to the dashboard, but a blacklist system exists in this CMS, which would make bruteforcing worthless for us:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542241708_8.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point I honestly got lost: even if the CMS&amp;#39; config and settings are widely exposed, there is nothing that could gives us the admin&amp;#39;s password. Which we need to make use of that CVE later on!&lt;/p&gt;
+
+&lt;p&gt;After browsing all the files scratching my head, I gave up and googled some write-ups: turns out the admin&amp;#39;s password is just... nibbles.&lt;br&gt;
+Yeah. Sometimes it&amp;#39;s just better to follow your instinct rather than looking for something fancy. Anyway, let’s move on…&lt;/p&gt;
+
+&lt;p&gt;Executing CVE-2015-6967 can easily be done with the instructions found here: &lt;a href="https://curesec.com/blog/article/blog/NibbleBlog-403-Code-Execution-47.html" rel="nofollow"&gt;https://curesec.com/blog/article/blog/NibbleBlog-403-Code-Execution-47.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are the steps to follow:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Go to &lt;a href="http://10.10.10.75/nibbleblog/admin.php?controller=plugins&amp;action=list" rel="nofollow"&gt;http://10.10.10.75/nibbleblog/admin.php?controller=plugins&amp;amp;action=list&lt;/a&gt; and click on &amp;quot;Install&amp;quot; for My image plugin&lt;/li&gt;
+&lt;li&gt;Fill up the fields with anything you want and upload a PHP web shell instead of an image&lt;/li&gt;
+&lt;li&gt;Ignore warning while uploading&lt;/li&gt;
+&lt;li&gt;Go to &lt;a href="http://10.10.10.75/nibbleblog/content/private/plugins/my_image/image.php" rel="nofollow"&gt;http://10.10.10.75/nibbleblog/content/private/plugins/my_image/image.php&lt;/a&gt; and enjoy your web shell!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For this purpose I used the following web shell, nice and simple: &lt;a href="https://github.com/nickola/web-console" rel="nofollow"&gt;https://github.com/nickola/web-console&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542282386_9.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;The user flag can now be reached: &lt;strong&gt;b02ff32bb332deba49eeaed21152c8d8&lt;/strong&gt;&lt;br&gt;
+For the root one, we&amp;#39;re gonna need some additional privesc. Running &lt;strong&gt;sudo -l&lt;/strong&gt; yields something interesting:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/static/images/hack-the-box-writeup-nibbles/s_176EB22770684CE253C2829BBED040B5405102CAF5E10F54FC870A1649049458_1582542321101_10.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Our current user can run &lt;strong&gt;monitor.sh&lt;/strong&gt; at the given path as sudo without any password! We just need to make that script outputs the root flag and we will be done:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;mkdir -p /home/nibbler/personal/stuff&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;touch /home/nibbler/personal/stuff/monitor.sh&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;chmod +x /home/nibbler/personal/stuff/monitor.sh&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;echo &amp;quot;#!/bin/bash&amp;quot; &amp;gt; /home/nibbler/personal/stuff/monitor.sh&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;echo &amp;quot;cat /root/root.txt&amp;quot; &amp;gt;&amp;gt; /home/nibbler/personal/stuff/monitor.sh&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cd /home/nibbler/personal/stuff/&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sudo ./monitor.sh&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And the root flag is now ours: &lt;strong&gt;b6d745c0dfb6457c55591efc898ef88c&lt;/strong&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <id>tag:127.0.0.1:3000,2019-10-23:/blog/easy-tunneling-with-sshuttle/</id>
+    <title type="html">Easy tunneling with sshuttle</title>
+    <published>2019-10-23T22:00:00Z</published>
+    <updated>2019-10-23T22:00:00Z</updated>
+    <link rel="alternate" href="http://127.0.0.1:3000/blog/easy-tunneling-with-sshuttle/" type="text/html"/>
+    <content type="html">&lt;p&gt;Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don&amp;#39;t even need to be an admin of the distant server to achieve this. How amazing is that?&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s what we want to achieve through SSH tunneling:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;easily redirect all traffic through the SSH tunnel, DNS and all UDP traffic included&lt;/li&gt;
+&lt;li&gt;automate even more the process with some scripting&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here&amp;#39;s what we want to &lt;strong&gt;avoid&lt;/strong&gt; by using sshuttle:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;wasting hours configuring things on the server acting as a proxy&lt;/li&gt;
+&lt;li&gt;creating a new connection through nmcli rather than being tunneled automatically&lt;/li&gt;
+&lt;li&gt;messing things up by misconfiguring something, OpenVPN being a good example of this.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;#39;ll still have to make a reasonably configured server for our proxy, but this will take way less time than setting up a VPN with any other tool. Let&amp;#39;s get started, with a digitalocean VPS.&lt;/p&gt;
+
+&lt;h2&gt;Setting up a digitalocean VPS with sane defaults&lt;/h2&gt;
+
+&lt;p&gt;First of all, create your droplet on digitalocean. Even if this would work for many linux flavor, this tutorial will use ubuntu. Pick the latest LTS version and choose to create a $5 droplet, which will be more than enough for a proxy.&lt;/p&gt;
+
+&lt;p&gt;Choose to paste your SSH public key to login in the settings. A one time password is hardly secure nor a good idea.&lt;/p&gt;
+
+&lt;p&gt;Once your droplet is up and online, connect with SSH:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;ssh root@my-droplet-ip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;First thing you should do is updating this freshly created server:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;apt-get update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, we should work on disabling root access. Let&amp;#39;s create a new user on this server:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;adduser your-user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Give it a strong password during the creation process. Next, add this user to the sudo group:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;usermod &lt;span class="nt"&gt;-aG&lt;/span&gt; &lt;span class="nb"&gt;sudo &lt;/span&gt;your-user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And while we&amp;#39;re at it, enable ufw (Uncomplicated FireWall). We&amp;#39;re gonna use it later on:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;ufw &lt;span class="nb"&gt;enable&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We wanna connect through SSH with the user we just created. Just as the same way we provided our public key during the droplet creation, we now have to repeat this process for the new user. First, switch from root to the user:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;su - your-user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And then, create a .ssh folder with the appropriate permissions:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;mkdir&lt;/span&gt; ~/.ssh
+&lt;span class="nb"&gt;chmod &lt;/span&gt;700 ~/.ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;On your &lt;strong&gt;client&lt;/strong&gt; (not the server!), run the following command to get the output of your public key:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;cat&lt;/span&gt; ~/.ssh/id_rsa.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then paste it in the following file on the server:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;vim ~/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Save the file and exit, and change again the permissions to restrict access to the file:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;chmod &lt;/span&gt;600 ~/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now return to the root user:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The last step with SSH is to edit sshd_config in order to restrict the access via the created user and the corresponding public key:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;vim /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Look up and change appropriately the following lines in this file. Make sure they are not commented as well (not beginning with &lt;strong&gt;#&lt;/strong&gt;):&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;PasswordAuthentication no
+PubkeyAuthentication &lt;span class="nb"&gt;yes
+&lt;/span&gt;ChallengeResponseAuthentication no
+PermitRootLogin no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We&amp;#39;re almost done, but keep in mind that we have to allow incoming SSH connections with ufw:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;ufw limit ssh/tcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;strong&gt;limit&lt;/strong&gt; setting here will ban any IP attempting and failing to connect repeatedly. Combined with our changes on sshd_config, this is more than enough to protect this opened port.&lt;/p&gt;
+
+&lt;p&gt;Last step for good measure is upgrading the system and rebooting the server:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;apt-get dist-upgrade &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; shutdown &lt;span class="nt"&gt;-r&lt;/span&gt; now
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After reboot, make sure that you cannot SSH to the server with root, and connect with the created user instead:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;ssh your-user@my-droplet-ip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We&amp;#39;re 100% done with our server, unless you&amp;#39;re interested in the misc part at the end of this article. Let&amp;#39;s move on to the client side.&lt;/p&gt;
+
+&lt;h2&gt;Setting up sshuttle&lt;/h2&gt;
+
+&lt;p&gt;Sshuttle is already available on most package managers. On archlinux, you can easily get it with &lt;code&gt;yay&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;yay sshuttle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Keep in mind that sshuttle doesn&amp;#39;t tunnel UDP traffic (except DNS) by default. A bit of extra work is needed on that part with tproxy, as described in the documentation: &lt;a href="https://sshuttle.readthedocs.io/en/stable/tproxy.html" rel="nofollow"&gt;https://sshuttle.readthedocs.io/en/stable/tproxy.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Basically it boils down to the following steps:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;run the following command as root after booting up:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;ip route add &lt;span class="nb"&gt;local &lt;/span&gt;default dev lo table 100
+ip rule add fwmark 1 lookup 100
+ip &lt;span class="nt"&gt;-6&lt;/span&gt; route add &lt;span class="nb"&gt;local &lt;/span&gt;default dev lo table 100
+ip &lt;span class="nt"&gt;-6&lt;/span&gt; rule add fwmark 1 lookup 100
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;run sshuttle as root with the tproxy method:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;sudo &lt;/span&gt;&lt;span class="nv"&gt;SSH_AUTH_SOCK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$SSH_AUTH_SOCK&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; sshuttle &lt;span class="nt"&gt;--method&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;tproxy &lt;span class="se"&gt;\&lt;/span&gt;
+                                             &lt;span class="nt"&gt;--disable-ipv6&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+                                             &lt;span class="nt"&gt;--dns&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+                                             &lt;span class="nt"&gt;--exclude&lt;/span&gt; your-server-ip &lt;span class="se"&gt;\&lt;/span&gt;
+                                             &lt;span class="nt"&gt;-r&lt;/span&gt; your-user@your-server-ip 0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That one is quite a mouthful so let&amp;#39;s break it down:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SSH_AUTH_SOCK=&amp;quot;$SSH_AUTH_SOCK&amp;quot;&lt;/code&gt; ensures that you can connect normally with SSH despise running sshuttle as root&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--method=tproxy&lt;/code&gt; is here to, well, activate the tproxy method for UDP traffic&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--disable-ipv6&lt;/code&gt; is self-explanatory. Sadly, I found that my ipv6 address would leak otherwise, and I&amp;#39;m not sure what is causing this at the moment.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--dns&lt;/code&gt; is to forward all DNS requests through SSH&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--exclude your-server-ip&lt;/code&gt; is required when forwarding all your traffic with tproxy, to prevent sshuttle from intercepting SSH packets&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-r your-user@your-server-ip 0/0&lt;/code&gt; finally, where to forward your entire traffic (represented here as 0/0)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Since ipv6 can leak even with the &lt;code&gt;--disable-ipv6&lt;/code&gt; command, let&amp;#39;s disable it while using sshuttle. This can be achieved temporarily by running the following commands as root:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;sudo &lt;/span&gt;sysctl &lt;span class="nt"&gt;-w&lt;/span&gt; net.ipv6.conf.all.disable_ipv6&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nb"&gt;sudo &lt;/span&gt;sysctl &lt;span class="nt"&gt;-w&lt;/span&gt; net.ipv6.conf.default.disable_ipv6&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nb"&gt;sudo &lt;/span&gt;sysctl &lt;span class="nt"&gt;-w&lt;/span&gt; net.ipv6.conf.lo.disable_ipv6&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is all nice and well but I don&amp;#39;t see myself running all of this at each boot, so let&amp;#39;s wrap everything we mentioned in a script:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="c"&gt;#!/usr/bin/env bash&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$EUID&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="nt"&gt;-ne&lt;/span&gt; 0 &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then
+    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"This script must be run as root. Exiting."&lt;/span&gt;
+    &lt;span class="nb"&gt;exit
+&lt;/span&gt;&lt;span class="k"&gt;fi
+
+&lt;/span&gt;ip route add &lt;span class="nb"&gt;local &lt;/span&gt;default dev lo table 100
+ip rule add fwmark 1 lookup 100
+ip &lt;span class="nt"&gt;-6&lt;/span&gt; route add &lt;span class="nb"&gt;local &lt;/span&gt;default dev lo table 100
+ip &lt;span class="nt"&gt;-6&lt;/span&gt; rule add fwmark 1 lookup 100
+
+sysctl &lt;span class="nt"&gt;-w&lt;/span&gt; net.ipv6.conf.all.disable_ipv6&lt;span class="o"&gt;=&lt;/span&gt;1
+sysctl &lt;span class="nt"&gt;-w&lt;/span&gt; net.ipv6.conf.default.disable_ipv6&lt;span class="o"&gt;=&lt;/span&gt;1
+sysctl &lt;span class="nt"&gt;-w&lt;/span&gt; net.ipv6.conf.lo.disable_ipv6&lt;span class="o"&gt;=&lt;/span&gt;1
+
+sshuttle &lt;span class="nt"&gt;--method&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;tproxy &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;--disable-ipv6&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;--dns&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;-e&lt;/span&gt; &lt;span class="s2"&gt;"sudo -u your-user ssh"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;--daemon&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;--pidfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/home/your-user/sshuttle.pid &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;--exclude&lt;/span&gt; your-server-ip &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nt"&gt;-r&lt;/span&gt; your-user@your-server-ip 0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Three options have been added here:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--daemon&lt;/code&gt; to run sshuttle in background&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--pidfile&lt;/code&gt; to put a file containing shuttle&amp;#39;s PID in a defined path. Change the latter according to your needs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;code&gt;-e&lt;/code&gt; flag will allow you to run the command as your main user and prompt for your ssh passphrase. This will use the right ssh pubkey to connect, even if ssh-agent isn&amp;#39;t loaded yet and sshuttle is ran as root.&lt;/p&gt;
+
+&lt;p&gt;Stopping the VPN is easy: just &lt;code&gt;kill&lt;/code&gt; the PID given in &lt;code&gt;sshuttle.pid&lt;/code&gt;. This can be automated with the following alias, ran as root:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;alias &lt;/span&gt;&lt;span class="nv"&gt;vpndown&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"kill '&lt;/span&gt;&lt;span class="si"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;cat&lt;/span&gt; /home/your-user/sshuttle.pid&lt;span class="si"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;'"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You should now be all set, just by adding the previous script in your &lt;code&gt;$PATH&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Misc: accessing the VPN when the SSH port is blocked&lt;/h2&gt;
+
+&lt;p&gt;If you want to connect on WiFi hotspots, you might want to change the SSH port to 443 on your server as it is nearly guaranteed to be always opened, no matter how strict the WiFi&amp;#39;s firewall is.&lt;/p&gt;
+
+&lt;p&gt;We have to change SSH&amp;#39;s default port on our server:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;vim /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Find and change the following line accordingly. Uncomment it if necessary:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;Port 443
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;One thing left now is to change ufw rules on your server to open that port:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;sudo &lt;/span&gt;ufw limit &lt;span class="k"&gt;in &lt;/span&gt;443/tcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Don&amp;#39;t forget to remove port 22 on ufw:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;sudo &lt;/span&gt;ufw status numbered
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Delete related rules with their IDs:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;sudo &lt;/span&gt;ufw delete &amp;lt;rule-id-here&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now restart the sshd service:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;sudo &lt;/span&gt;service sshd restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, the only thing left is to specify the 443 port in the sshuttle script:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;-r your-user@your-server-ip:443 0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The VPN should now be accessible from almost everywhere.&lt;/p&gt;
+</content>
+  </entry>
+</feed>
+

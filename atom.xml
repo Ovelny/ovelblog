@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:base="http://127.0.0.1:3000/">
-  <id>http://127.0.0.1:3000/</id>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://ovelny.sh/">
+  <id>https://ovelny.sh/</id>
   <title>ovelny</title>
   <updated>2020-04-14T22:00:00Z</updated>
-  <link rel="alternate" href="http://127.0.0.1:3000/" type="text/html"/>
-  <link rel="self" href="http://127.0.0.1:3000/atom.xml" type="application/atom+xml"/>
+  <link rel="alternate" href="https://ovelny.sh/" type="text/html"/>
+  <link rel="self" href="https://ovelny.sh/atom.xml" type="application/atom+xml"/>
   <author>
     <name>ovelny</name>
     <uri>https://ovelny.sh</uri>
   </author>
   <entry>
-    <id>tag:127.0.0.1:3000,2020-04-14:/blog/hack-the-box-writeup-nibbles/</id>
+    <id>tag:ovelny.sh,2020-04-14:/blog/hack-the-box-writeup-nibbles/</id>
     <title type="html">Hack The Box writeup: Nibbles</title>
     <published>2020-04-14T22:00:00Z</published>
     <updated>2020-04-14T22:00:00Z</updated>
-    <link rel="alternate" href="http://127.0.0.1:3000/blog/hack-the-box-writeup-nibbles/" type="text/html"/>
+    <link rel="alternate" href="https://ovelny.sh/blog/hack-the-box-writeup-nibbles/" type="text/html"/>
     <content type="html">&lt;h2&gt;Full walkthrough&lt;/h2&gt;
 
 &lt;p&gt;As with everything, let’s start with enumeration on this target. A full nmap scan doesn&amp;#39;t expose much with this box: only the SSH and HTTP ports are open, the latter being used by apache.&lt;br&gt;
@@ -92,11 +92,11 @@ For the root one, we&amp;#39;re gonna need some additional privesc. Running &lt;
 </content>
   </entry>
   <entry>
-    <id>tag:127.0.0.1:3000,2019-10-23:/blog/easy-tunneling-with-sshuttle/</id>
+    <id>tag:ovelny.sh,2019-10-23:/blog/easy-tunneling-with-sshuttle/</id>
     <title type="html">Easy tunneling with sshuttle</title>
     <published>2019-10-23T22:00:00Z</published>
     <updated>2019-10-23T22:00:00Z</updated>
-    <link rel="alternate" href="http://127.0.0.1:3000/blog/easy-tunneling-with-sshuttle/" type="text/html"/>
+    <link rel="alternate" href="https://ovelny.sh/blog/easy-tunneling-with-sshuttle/" type="text/html"/>
     <content type="html">&lt;p&gt;Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don&amp;#39;t even need to be an admin of the distant server to achieve this. How amazing is that?&lt;/p&gt;
 
 &lt;p&gt;Here&amp;#39;s what we want to achieve through SSH tunneling:&lt;/p&gt;

@@ -2,7 +2,7 @@ body {
   margin: 40px auto;
   max-width: 800px;
   line-height: 1.6;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Oxygen, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Oxygen, Cantarell, sans-serif, system-ui;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 17px;
@@ -51,7 +51,7 @@ header {
 }
 
 header > section > h2 {
-margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 .chronolog-title,
@@ -88,6 +88,11 @@ kbd,
 pre,
 samp {
   overflow: auto;
+}
+
+code {
+  color: #fbf1c7;
+  background-color: #282828;
 }
 
 p > img {

@@ -116,6 +116,18 @@ margin-top: auto;
 }
 }
 
+@media screen and (min-width: 800px) {
+    footer {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: inherit;
+        width: inherit;
+        padding: inherit;
+    }
+}
+
 div.highlight {
 padding: 1px 10px;
 margin: 32px 0px;

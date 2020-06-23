@@ -116,7 +116,7 @@ margin-top: auto;
 }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 800px), screen and (max-height: 100%){
     footer {
         position: absolute;
         bottom: 0px;

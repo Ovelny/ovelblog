@@ -17,6 +17,13 @@ body {
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+  min-height: 91vh;
+  display:flex;
+  flex-direction:column;
+}
+
+main {
+  flex-grow:1;
 }
 
 h1,
@@ -116,17 +123,17 @@ margin-top: auto;
 }
 }
 
-@media screen and (min-width: 800px), screen and (max-height: 100%){
-    footer {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        margin: inherit;
-        width: inherit;
-        padding: inherit;
-    }
-}
+/* @media screen and (min-width: 800px), screen and (max-height: 100%){ */
+/*     footer { */
+/*         position: absolute; */
+/*         bottom: 0px; */
+/*         left: 0px; */
+/*         right: 0px; */
+/*         margin: inherit; */
+/*         width: inherit; */
+/*         padding: inherit; */
+/*     } */
+/* } */
 
 div.highlight {
 padding: 1px 10px;

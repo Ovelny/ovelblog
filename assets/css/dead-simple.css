@@ -7,9 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 17px;
   text-align: justify;
-  color: rgb(208, 204, 197);
+  color: #1A1A1A;
+  background-color: #F7F7F7;
   padding: 0 10px;
-  background-color: #181a1b;
   overflow-x: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -46,11 +46,12 @@ li {
 }
 
 a {
-  text-decoration: none;
+  color: #1A1A1A;
 }
 
-a:link, a:visited {
-  color: #b987e8;
+a:hover {
+    background-color:#1A1A1A;
+    color: #F7F7F7;
 }
 
 header {
@@ -59,6 +60,17 @@ header {
 
 header > section > h2 {
   margin: 20px 0px;
+}
+
+header > section > a,
+header > section > h2 > a {
+    text-decoration: none;
+}
+
+header > section > a:hover,
+header > section > h2 > a:hover {
+    background-color: initial;
+    color: initial;
 }
 
 .chronolog-title,
@@ -76,7 +88,6 @@ nav > a {
 
 img.logo {
   border-radius: 50%;
-  box-shadow: 0px 0px 0px 3px rgb(208, 204, 197);
 }
 
 .chronolog {
@@ -97,15 +108,15 @@ samp {
   overflow: auto;
 }
 
-code {
-  color: #fbf1c7;
-  background-color: #282828;
+:not(.highlight) > code {
+    color: #1A1A1A;
+    background-color: #E4E4E4;
 }
 
 p > img {
 margin-left: 50%;
 transform: translateX(-50%);
-box-shadow: 0 0 0 3px #777;
+box-shadow: 0 0 0 3px #1A1A1A;
 margin-bottom: 20px;
 margin-top: 20px;
 }
@@ -122,18 +133,6 @@ margin-bottom: auto;
 margin-top: auto;
 }
 }
-
-/* @media screen and (min-width: 800px), screen and (max-height: 100%){ */
-/*     footer { */
-/*         position: absolute; */
-/*         bottom: 0px; */
-/*         left: 0px; */
-/*         right: 0px; */
-/*         margin: inherit; */
-/*         width: inherit; */
-/*         padding: inherit; */
-/*     } */
-/* } */
 
 div.highlight {
 padding: 1px 10px;

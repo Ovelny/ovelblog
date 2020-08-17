@@ -136,6 +136,16 @@
 
 <p>On Ubuntu-based distros, simply run <code>xdg-settings set default-web-browser org.qutebrowser.qutebrowser.desktop</code>.</p>
 
+<h2>Change search engines</h2>
+
+<p>You can change the default search engine, and add other ones by binding them to shortcuts. The default setting is the following: <code>{&quot;DEFAULT&quot;: &quot;https://duckduckgo.com/?q={}&quot;}</code>.</p>
+
+<p>Change the <code>DEFAULT</code> value if you&#39;d like to, or add some others search engines with another key/value pair.</p>
+
+<p>Example: <code>:set url.searchengines &#39;{&quot;d&quot;: &quot;https://lite.duckduckgo.com/lite/?q={}&quot;, &quot;DEFAULT&quot;: &quot;https://www.google.com/search?hl=en&amp;q={}&quot;}&#39;</code></p>
+
+<p>This will use google as the default search engine, and duckduckgo lite whenever you search is prepended with <code>d</code>.</p>
+
     </main>
     </main>
     <footer id="footer">

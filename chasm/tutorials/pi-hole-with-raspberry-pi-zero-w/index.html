@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ovelny - set up Pi-hole on a Raspberry Pi Zero W</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ovelny - Personal notes on learning infosec, penetration testing, programming and others"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" type=text/css href="/assets/css/dead-simple.min.css">
+    <link rel="stylesheet" type=text/css href="/assets/css/rouge.min.css">
+    <link
+      href="/atom.xml"
+      rel="alternate"
+      title="ovelny"
+      type="application/atom+xml"
+    />
+  </head>
+  <body>
+
+    <header>
+      <section>
+        <a href="/chasm/">
+          <img
+            class="logo"
+            src="/assets/images/chasm.jpg"
+            alt="chasm logo"
+          />
+        </a>
+        <h2><a href="/chasm/">chasm</a></h2>
+      </section>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/chasm/about/">About</a>
+      </nav>
+    </header>
+    <main>
+
+    <main>
+        <h2>Set up pi-hole on a raspberry pi zero w</h2>
+      <p>Grouping several notes and resources found online to set up a Pi-hole on a Raspberry Pi Zero W, step by step.</p>
+
+<h2>Initial SD card setup</h2>
+
+<p>Plug your micro SD card on your machine and install Raspberry Pi OS lite. The easiest way to do this is to use the official Raspberry Pi Imager, found here: <a href="https://www.raspberrypi.org/downloads/" rel="nofollow">https://www.raspberrypi.org/downloads/</a></p>
+
+<p>Unplug it and replug it for the following steps.</p>
+
+<h2>Finish setting up the SD card</h2>
+
+<p>You should see a <code>Boot</code> folder in your SD card if Raspberry Pi OS has been installed properly. Several files need to be created and edited at the root of this directory:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">touch </span>wpa_supplicant.conf
+<span class="nb">touch </span>ssh
+</code></pre></div>
+
+<p>Add the following lines to <code>wpa_supplicant.conf</code>:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">ctrl_interface</span><span class="o">=</span><span class="nv">DIR</span><span class="o">=</span>/var/run/wpa_supplicant <span class="nv">GROUP</span><span class="o">=</span>netdev
+<span class="nv">update_config</span><span class="o">=</span>1
+<span class="nv">country</span><span class="o">=</span>FR <span class="c"># or another country, depending on yours</span>
+</code></pre></div>
+
+<p>Next, run the command <code>wpa_passphrase &lt;ssid-name&gt; &lt;password-name&gt;</code> on your current machine, wrapping the parameters of your Wi-Fi connection in quotes if they contain spaces.</p>
+
+<p>Copy the output of the command in <code>wpa_supplicant.conf</code>, and delete the commented_out <code>psk</code> line before saving. The last line will store your Wi-Fi password more securely than plaintext.</p>
+
+<p><code>wpa_supplicant.conf</code> should now look like this:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nv">ctrl_interface</span><span class="o">=</span><span class="nv">DIR</span><span class="o">=</span>/var/run/wpa_supplicant <span class="nv">GROUP</span><span class="o">=</span>netdev
+<span class="nv">update_config</span><span class="o">=</span>1
+<span class="nv">country</span><span class="o">=</span>US
+
+<span class="nv">network</span><span class="o">={</span>
+    <span class="nv">ssid</span><span class="o">=</span><span class="s2">"YOURSSID"</span>
+    <span class="nv">psk</span><span class="o">=</span><span class="s2">"YOURPASSWORD"</span>
+    <span class="nv">scan_ssid</span><span class="o">=</span>1 <span class="c"># add this line too!</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>Next, add the following line at the end of <code>config.txt</code> to enable troubleshooting through a USB console cable: </p>
+
+<p><code>enable_uart=1</code></p>
+
+<p>The <code>ssh</code> file does not need to be edited and enable SSH on its own.</p>
+
+<p>Unplug the micro SD card and plug it in your raspberry Pi Zero W.</p>
+
+<h2>Power up and configuration</h2>
+
+<p>Power up your Raspberry Pi on your machine with a USB cable, by using the micro USB slot on the far right. The green LED light should show some activity, after a few minutes ping your Pi from your machine: <code>ping raspberrypi.local</code></p>
+
+<p>If this worked, you should be able to ssh to your Pi: <code>ssh pi@raspberrypi.local</code>, with <code>raspberry</code> as the default password.</p>
+
+<p>Next, let&#39;s update the Pi Zero:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt upgrade
+</code></pre></div>
+
+<p>Then change the default password to something secure with <code>passwd</code>.</p>
+
+<p>If you have SSH keys on your machine, it would be much better to use them to connect to your Pi Zero rather than a password. Create a <code>.ssh</code> folder on your Pi with appropriate permissions:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mkdir</span> ~/.ssh
+<span class="nb">chmod </span>700 ~/.ssh
+</code></pre></div>
+
+<p>Copy your public key on your machine from <code>~/.ssh/id_rsa.pub</code>, then create the file <code>~/.ssh/authorized_keys</code> on your Pi Zero and paste it inside. Run <code>chmod 600 ~/.ssh/authorized_keys</code> too to set the right permissions.</p>
+
+<p>Next, edit <code>/etc/ssh/sshd_config</code> on your Pi and add or edit the following lines like the following:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>PasswordAuthentication no
+PubkeyAuthentication <span class="nb">yes
+</span>ChallengeResponseAuthentication no
+PermitRootLogin no
+</code></pre></div>
+
+<p>This will harden SSH security on your Pi and use exclusively keys to connect. Reboot with <code>sudo shutdown -r now</code> to apply changes and be done with it.</p>
+
+<h2>Install Pi-hole</h2>
+
+<p>Installing Pi-hole is easy if you don&#39;t wanna review the source code first, simply run <code>curl -sSL https://install.pi-hole.net | bash</code>. Picking default options is fine when prompted, but if you&#39;re using unbound as suggested earlier, you should select the custom DNS option and set it as <code>127.0.0.1#5335</code>.</p>
+
+<h2>Use unbound for your own recursive DNS server</h2>
+
+<p>Follow instructions here if you wish to use unbound rather than trusting Google&#39;s DNS servers or others: <a href="https://docs.pi-hole.net/guides/unbound/" rel="nofollow">https://docs.pi-hole.net/guides/unbound/</a></p>
+
+<h2>Router settings</h2>
+
+<p>One of the easiest way to let your Pi-Hole become the default DNS server for all your machines is to disable DHCP on your router. Since this depends on your ISP and router model, you have to search how to disable this on your own.</p>
+
+<p>It is also recommended to disable ipv6, as this can leak DNS queries that your Pi-Hole won&#39;t handle.</p>
+
+<p>Once you&#39;ve done that, go to pi.hole/admin and enable DHCP in settings. It might be required to reboot your Pi Zero and your router for changes to take effect.</p>
+
+<h2>Optional: display stats with a Waveshare e-Paper HAT</h2>
+
+    </main>
+    </main>
+    <footer id="footer">
+        <div class="footer-section">Copyright © 2019 - 2020 ovelny</div>
+      <div class="footer-section">:(){ :|:& };:</div>
+    </footer>
+  </body>
+</html>
+

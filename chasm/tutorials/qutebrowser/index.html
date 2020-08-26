@@ -146,6 +146,15 @@
 
 <p>This will use google as the default search engine, and duckduckgo lite whenever your search is prepended with <code>d</code>.</p>
 
+<h2>Play youtube videos with mpv</h2>
+
+<p>qutebrowser can&#39;t block youtube ads, but it can play youtube videos with mpv and youtube-dl for the same result. If you have mpv installed on your system, run this command in qutebrowser:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>:bind ,f hint links spawn mpv <span class="nt">--window-maximized</span><span class="o">=</span><span class="nb">yes</span> <span class="o">{</span>hint-url<span class="o">}</span>
+</code></pre></div>
+
+<p>Selecting a link with <code>,f</code> will now hook the url to mpv in a maximized window, without any ads. It also works for live streams.</p>
+
     </main>
     </main>
     <footer id="footer">

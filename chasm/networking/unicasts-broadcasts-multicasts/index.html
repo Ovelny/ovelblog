@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ovelny - networking</title>
+    <title>ovelny - unicasts, broadcasts, multicasts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
@@ -38,40 +38,35 @@
     </header>
     <main>
 
+    <main>
+        <h2>Unicasts, broadcasts, multicasts</h2>
+      <h2>Unicast</h2>
 
-    <h2>Networking</h2>
-    <ul>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/broadcast-domains-and-collision-domains/>Broadcast domains and collision domains</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/ethernet-introduction/>Ethernet introduction</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/network-segmentation/>Network segmentation</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/network-switching-overview/>Network switching overview</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/protocol-data-units/>Protocol data units</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/osi-model/>Understanding the osi model</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/unicasts-broadcasts-multicasts/>Unicasts, broadcasts, multicasts</a>
-            </li>
-        
-    </ul>
+<ul>
+<li>One station to one station: client to server for instance</li>
+<li>Not suited for real-time communications</li>
+</ul>
 
+<h2>Broadcast</h2>
+
+<ul>
+<li>One station to all other stations</li>
+<li>A package is received by everyone else</li>
+<li>Scope: the broadcast domain</li>
+<li>Used for ARP requests</li>
+<li>Not used with IPv6</li>
+</ul>
+
+<h2>Multicast</h2>
+
+<ul>
+<li>One station to several (not all) other stations</li>
+<li>A compromise between unicast and broadcast</li>
+<li>Used for multimedia</li>
+<li>Specialized and not suited for large networks</li>
+</ul>
+
+    </main>
     </main>
     <footer id="footer">
         <div class="footer-section">Copyright © 2019 - 2020 ovelny</div>

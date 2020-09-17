@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ovelny - networking</title>
+    <title>ovelny - network segmentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
@@ -38,40 +38,32 @@
     </header>
     <main>
 
+    <main>
+        <h2>Network segmentation</h2>
+      <ul>
+<li>Between each switch: no knowledge of the rest of the network</li>
+<li>Broadcast: limited to switches</li>
+<li>The default topology is to have many switches to segment the network</li>
+<li>Or to use a more convenient alternative: VLANs</li>
+<li>VLANs act as switches, but separates the network logically and not physically: it&#39;s more flexible and scalable</li>
+<li>You can have multiple VLANs per switch, no limitations of segmentation</li>
+<li>VLANs on multiple switches however, do not scale well</li>
+<li>Trunking is a better alternative for this:
 
-    <h2>Networking</h2>
-    <ul>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/broadcast-domains-and-collision-domains/>Broadcast domains and collision domains</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/ethernet-introduction/>Ethernet introduction</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/network-segmentation/>Network segmentation</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/network-switching-overview/>Network switching overview</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/protocol-data-units/>Protocol data units</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/osi-model/>Understanding the osi model</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/unicasts-broadcasts-multicasts/>Unicasts, broadcasts, multicasts</a>
-            </li>
-        
-    </ul>
+<ul>
+<li>only one physical connection</li>
+<li>can transmit multiple VLANs through that connection</li>
+</ul></li>
+<li>802.1Q trunking:
 
+<ul>
+<li>normal Ethernet frame, but with an additional VLAN header</li>
+<li>the header is needed to determine the frame&#39;s destination</li>
+<li>before 802.1Q, ISL was used but is now obsolete</li>
+</ul></li>
+</ul>
+
+    </main>
     </main>
     <footer id="footer">
         <div class="footer-section">Copyright © 2019 - 2020 ovelny</div>

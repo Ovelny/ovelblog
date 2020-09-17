@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ovelny - protocol data units</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ovelny - Personal notes on learning infosec, penetration testing, programming and others"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" type=text/css href="/assets/css/dead-simple.min.css">
+    <link rel="stylesheet" type=text/css href="/assets/css/rouge.min.css">
+    <link
+      href="/atom.xml"
+      rel="alternate"
+      title="ovelny"
+      type="application/atom+xml"
+    />
+  </head>
+  <body>
+
+    <header>
+      <section>
+        <a href="/chasm/">
+          <img
+            class="logo"
+            src="/assets/images/chasm.jpg"
+            alt="chasm logo"
+          />
+        </a>
+        <h2><a href="/chasm/">chasm</a></h2>
+      </section>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/chasm/about/">About</a>
+      </nav>
+    </header>
+    <main>
+
+    <main>
+        <h2>Protocol data units</h2>
+      <h2>PDU overview</h2>
+
+<ul>
+<li>Unit of information sent to an OSI layer with a protocol like Ethernet, IP, TCP, etc</li>
+<li>Protocols do not care about the content of data</li>
+<li>Each PDU is added from top to bottom of the OSI model, layer by layer</li>
+<li>Each layer adds a section to properly transmits data</li>
+<li>When data is received, it goes bottom to top on the receiver end, and is stripped off off a section at each related layer</li>
+</ul>
+
+<h2>MTU</h2>
+
+<ul>
+<li>Stands for Maximum Transmission Unit</li>
+<li>Maximum size of a packet before fragmentation</li>
+<li>If a fragment is lost, it is retransmitted</li>
+<li>The MTU might not be accurate when automatically configured</li>
+<li>Usually configured once, and never changed afterwards</li>
+</ul>
+
+<h2>Example of an Ethernet frame</h2>
+
+<p>From left to right:</p>
+
+<ul>
+<li>DLC header: 14 bytes</li>
+<li>IP header: 20 bytes</li>
+<li>TCP header: 20 bytes</li>
+<li>TCP data: 1460 bytes</li>
+<li>FCS: 4 bytes</li>
+<li>Total IP packet size (IP header + TCP header + TCP data) = 1500 bytes</li>
+</ul>
+
+<p>IP fragmentation: always fragmented in multiples of 8</p>
+
+<h2>DF: Don&#39;t Fragment bit</h2>
+
+<ul>
+<li>Routers can send requests for fragmentation with ICMP</li>
+<li>It&#39;s possible to send a ping command with appropriate parameters to determine what is the ideal MTU</li>
+<li>No ping with the DF bit set means that the MTU is not enough</li>
+</ul>
+
+    </main>
+    </main>
+    <footer id="footer">
+        <div class="footer-section">Copyright © 2019 - 2020 ovelny</div>
+      <div class="footer-section">:(){ :|:& };:</div>
+    </footer>
+  </body>
+</html>
+

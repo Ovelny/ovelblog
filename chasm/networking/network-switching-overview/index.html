@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ovelny - networking</title>
+    <title>ovelny - network switching overview</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
@@ -38,40 +38,28 @@
     </header>
     <main>
 
+    <main>
+        <h2>Network switching overview</h2>
+      <h2>Switches</h2>
 
-    <h2>Networking</h2>
-    <ul>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/broadcast-domains-and-collision-domains/>Broadcast domains and collision domains</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/ethernet-introduction/>Ethernet introduction</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/network-segmentation/>Network segmentation</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/network-switching-overview/>Network switching overview</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/protocol-data-units/>Protocol data units</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/osi-model/>Understanding the osi model</a>
-            </li>
-        
-            <li>
-                <a href=https://ovelny.sh/chasm/networking/unicasts-broadcasts-multicasts/>Unicasts, broadcasts, multicasts</a>
-            </li>
-        
-    </ul>
+<ul>
+<li>Send or receive data frames</li>
+<li>Keep a table of all MAC addresses</li>
+<li>Avoid loops with the SPT protocol</li>
+<li>Associate MAC addresses with the outgoing interface</li>
+<li>Can be wired in series between themselves</li>
+<li>Act as a relay between themselves</li>
+<li>Records the sender of data frames</li>
+</ul>
 
+<h2>ARP</h2>
+
+<ul>
+<li>Address resolution protocol: finds the MAC address from an IP address</li>
+<li>Send a broadcast message if the MAC address isn&#39;t found in cached table</li>
+</ul>
+
+    </main>
     </main>
     <footer id="footer">
         <div class="footer-section">Copyright © 2019 - 2020 ovelny</div>

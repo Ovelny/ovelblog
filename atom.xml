@@ -2,13 +2,54 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://ovelny.sh/">
   <id>https://ovelny.sh/</id>
   <title>ovelny</title>
-  <updated>2020-04-14T22:00:00Z</updated>
+  <updated>2020-09-23T22:00:00Z</updated>
   <link rel="alternate" href="https://ovelny.sh/" type="text/html"/>
   <link rel="self" href="https://ovelny.sh/atom.xml" type="application/atom+xml"/>
   <author>
     <name>ovelny</name>
     <uri>https://ovelny.sh</uri>
   </author>
+  <entry>
+    <id>tag:ovelny.sh,2020-09-23:/blog/microblogging-is-not-worth-it/</id>
+    <title type="html">Microblogging is not worth it</title>
+    <published>2020-09-23T22:00:00Z</published>
+    <updated>2020-09-23T22:00:00Z</updated>
+    <link rel="alternate" href="https://ovelny.sh/blog/microblogging-is-not-worth-it/" type="text/html"/>
+    <content type="html">&lt;p&gt;I&amp;#39;m currently deleting my accounts on Mastodon and will add a contact page on this website so you can reach me out differently. While my beliefs were already confirmed to be true about &amp;quot;social media alternatives&amp;quot;, watching The Social Dilemma just cemented my thoughts about online interactions, specifically with microblogging.&lt;/p&gt;
+
+&lt;p&gt;Here is what&amp;#39;s wrong about mastodon (and microblogging) in my humble opinion. I will not pretend to lay out facts or anything like it, merely a few impressions that I got after a few months of use.&lt;/p&gt;
+
+&lt;h2&gt;Just another echo chamber&lt;/h2&gt;
+
+&lt;p&gt;Content is federated, and people can follow each other across instances (provided they&amp;#39;ve not been blocked for various reasons).&lt;/p&gt;
+
+&lt;p&gt;This is all nice and fine on paper, but in reality instances are pretty distant from each other. You cannot browse other instances as easily as the one you registered to (they might even make their feed entirely private, in fact), and thus cannot find other people (like-minded or not) as easily as you would expect. This usually leads up to instances being acquainted to 2-3 other instances, and that&amp;#39;s it. So much for the broad variety promised by federation.&lt;/p&gt;
+
+&lt;p&gt;While Twitter and centralized platforms algorithmically create an echo chamber based on your habits and follows to reinforce your behavior and make it predictable, the only difference provided by Mastodon is that you set up for the exact same thing &lt;strong&gt;manually&lt;/strong&gt;. Registering to an instance implicitely makes you subscribe to an echo chamber, and you are now stuck in a positive feedback loop just like anywhere else.&lt;/p&gt;
+
+&lt;p&gt;This will lead you to the exact same pitfalls as Twitter: polarization, antagonizing different mindsets, and simply not having your thoughts challenged by a wide variety of opinions. In short, reducing ways to keep a sane amount of objectivity and critical thinking. Congratulations, you just solved... nothing, on a social scale.&lt;/p&gt;
+
+&lt;h2&gt;No opposing viewpoints == pretty dumb takes&lt;/h2&gt;
+
+&lt;p&gt;This is a direct consequence of living in an echo chamber. As very few people will oppose your views on a daily basis, you will instinctively grow up to be very sure of your opinions. Which in turn is sure to make you post dumber and dumber takes, in a slow but steady pace.&lt;/p&gt;
+
+&lt;p&gt;Never have &amp;quot;heroes&amp;quot; or role models too: if they have an account you are sure as hell to find disappointment in their feeds. The more followers you have, the more likely you are to simply not question your worldview, as the positive feedback loop reinforces itself with no end in sight.&lt;/p&gt;
+
+&lt;p&gt;In fact, having very few followers is a blessing in disguise. The dopamine provided by fake internet points is less likely to influence your next post, which is why microblogging (or any other form of social media with meaningless metrics) will probably make you a worse person as time goes by and your audience grows, rather than a better one.&lt;/p&gt;
+
+&lt;h2&gt;Some forms of communication are simply suboptimal&lt;/h2&gt;
+
+&lt;p&gt;Microblogging tries to be as instant as chatting, as enriched as blog posts, as interactive as forums and it fails at all of these goals. You cannot do everything without becoming some sort of Frankenstein monster that hinders communication rather than enhancing it.&lt;/p&gt;
+
+&lt;p&gt;Still, Twitter is fine for a few selected things: self-promotion, creating an audience, promoting your brand or persona. You are most likely following people doing that already, whether you&amp;#39;re aware of it or not. It&amp;#39;s a casual LinkedIn, which is a valid purpose even if it&amp;#39;s not my thing.&lt;/p&gt;
+
+&lt;p&gt;What about Mastodon? You got a federated network, a chronological timeline, no ads, no tracking, and a way to delete and redraft your posts among other things. It&amp;#39;s great because it solves &lt;strong&gt;technological&lt;/strong&gt; pain points of Twitter, but that&amp;#39;s it. Don&amp;#39;t expect it to be any different on a &lt;strong&gt;social&lt;/strong&gt; scale.&lt;/p&gt;
+
+&lt;p&gt;Stick to chat, emails and forums instead. They will never be as good as IRL communication, but they&amp;#39;re the best options we got online. Disable all notifications and you got a pleasant experience that is less likely to become another dopamine nightmare.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s not all black and white however: I met amazing people on Mastodon who inspired me greatly and provided me with insights I wouldn&amp;#39;t have gotten anywhere else. I&amp;#39;m blaming the platform and what it does to individuals on a long term scale, not communities.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <id>tag:ovelny.sh,2020-04-14:/blog/hack-the-box-writeup-nibbles/</id>
     <title type="html">Hack The Box writeup: Nibbles</title>

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ovelny - Microblogging is not worth it</title>
+    <title>ovelny - Easy tunneling with sshuttle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
@@ -53,40 +53,254 @@
     <main>
 
     <main>
-        <h2>Microblogging is not worth it</h2>
-      <p>I&#39;m currently deleting my accounts on Mastodon and will add a contact page on this website so you can reach me out differently. While my beliefs were already confirmed to be true about &quot;social media alternatives&quot;, watching The Social Dilemma just cemented my thoughts about online interactions, specifically with microblogging.</p>
+        <h2>Easy tunneling with sshuttle</h2>
+      <p>Sshuttle is a genius program that allows you to tunnel all of your traffic through SSH. As a result, it can act as a VPN for any machine you can SSH to. You don&#39;t even need to be an admin of the distant server to achieve this. How amazing is that?</p>
 
-<p>Here is what&#39;s wrong about mastodon (and microblogging) in my humble opinion. I will not pretend to lay out facts or anything like it, merely a few impressions that I got after a few months of use.</p>
+<p>Here&#39;s what we want to achieve through SSH tunneling:</p>
 
-<h2>Just another echo chamber</h2>
+<ul>
+<li>easily redirect all traffic through the SSH tunnel, DNS and all UDP traffic included</li>
+<li>automate even more the process with some scripting</li>
+</ul>
 
-<p>Content is federated, and people can follow each other across instances (provided they&#39;ve not been blocked for various reasons).</p>
+<p>Here&#39;s what we want to <strong>avoid</strong> by using sshuttle:</p>
 
-<p>This is all nice and fine on paper, but in reality instances are pretty distant from each other. You cannot browse other instances as easily as the one you registered to (they might even make their feed entirely private, in fact), and thus cannot find other people (like-minded or not) as easily as you would expect. This usually leads up to instances being acquainted to 2-3 other instances, and that&#39;s it. So much for the broad variety promised by federation.</p>
+<ul>
+<li>wasting hours configuring things on the server acting as a proxy</li>
+<li>creating a new connection through nmcli rather than being tunneled automatically</li>
+<li>messing things up by misconfiguring something, OpenVPN being a good example of this.</li>
+</ul>
 
-<p>While Twitter and centralized platforms algorithmically create an echo chamber based on your habits and follows to reinforce your behavior and make it predictable, the only difference provided by Mastodon is that you set up for the exact same thing <strong>manually</strong>. Registering to an instance implicitely makes you subscribe to an echo chamber, and you are now stuck in a positive feedback loop just like anywhere else.</p>
+<p>We&#39;ll still have to make a reasonably configured server for our proxy, but this will take way less time than setting up a VPN with any other tool. Let&#39;s get started, with a digitalocean VPS.</p>
 
-<p>This will lead you to the exact same pitfalls as Twitter: polarization, antagonizing different mindsets, and simply not having your thoughts challenged by a wide variety of opinions. In short, reducing ways to keep a sane amount of objectivity and critical thinking. Congratulations, you just solved... nothing, on a social scale.</p>
+<h2>Setting up a digitalocean VPS with sane defaults</h2>
 
-<h2>No opposing viewpoints == pretty dumb takes</h2>
+<p>First of all, create your droplet on digitalocean. Even if this would work for many linux flavor, this tutorial will use ubuntu. Pick the latest LTS version and choose to create a $5 droplet, which will be more than enough for a proxy.</p>
 
-<p>This is a direct consequence of living in an echo chamber. As very few people will oppose your views on a daily basis, you will instinctively grow up to be very sure of your opinions. Which in turn is sure to make you post dumber and dumber takes, in a slow but steady pace.</p>
+<p>Choose to paste your SSH public key to login in the settings. A one time password is hardly secure nor a good idea.</p>
 
-<p>Never have &quot;heroes&quot; or role models too: if they have an account you are sure as hell to find disappointment in their feeds. The more followers you have, the more likely you are to simply not question your worldview, as the positive feedback loop reinforces itself with no end in sight.</p>
+<p>Once your droplet is up and online, connect with SSH:</p>
 
-<p>In fact, having very few followers is a blessing in disguise. The dopamine provided by fake internet points is less likely to influence your next post, which is why microblogging (or any other form of social media with meaningless metrics) will probably make you a worse person as time goes by and your audience grows, rather than a better one.</p>
+<div class="highlight"><pre class="highlight shell"><code>ssh root@my-droplet-ip
+</code></pre></div>
 
-<h2>Some forms of communication are simply suboptimal</h2>
+<p>First thing you should do is updating this freshly created server:</p>
 
-<p>Microblogging tries to be as instant as chatting, as enriched as blog posts, as interactive as forums and it fails at all of these goals. You cannot do everything without becoming some sort of Frankenstein monster that hinders communication rather than enhancing it.</p>
+<div class="highlight"><pre class="highlight shell"><code>apt-get update
+</code></pre></div>
 
-<p>Still, Twitter is fine for a few selected things: self-promotion, creating an audience, promoting your brand or persona. You are most likely following people doing that already, whether you&#39;re aware of it or not. It&#39;s a casual LinkedIn, which is a valid purpose even if it&#39;s not my thing.</p>
+<p>Then, we should work on disabling root access. Let&#39;s create a new user on this server:</p>
 
-<p>What about Mastodon? You got a federated network, a chronological timeline, no ads, no tracking, and a way to delete and redraft your posts among other things. It&#39;s great because it solves <strong>technological</strong> pain points of Twitter, but that&#39;s it. Don&#39;t expect it to be any different on a <strong>social</strong> scale.</p>
+<div class="highlight"><pre class="highlight shell"><code>adduser your-user
+</code></pre></div>
 
-<p>Stick to chat, emails and forums instead. They will never be as good as IRL communication, but they&#39;re the best options we got online. Disable all notifications and you got a pleasant experience that is less likely to become another dopamine nightmare.</p>
+<p>Give it a strong password during the creation process. Next, add this user to the sudo group:</p>
 
-<p>It&#39;s not all black and white however: I met amazing people on Mastodon who inspired me greatly and provided me with insights I wouldn&#39;t have gotten anywhere else. I&#39;m blaming the platform and what it does to individuals on a long term scale, not communities.</p>
+<div class="highlight"><pre class="highlight shell"><code>usermod <span class="nt">-aG</span> <span class="nb">sudo </span>your-user
+</code></pre></div>
+
+<p>And while we&#39;re at it, enable ufw (Uncomplicated FireWall). We&#39;re gonna use it later on:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>ufw <span class="nb">enable</span>
+</code></pre></div>
+
+<p>We wanna connect through SSH with the user we just created. Just as the same way we provided our public key during the droplet creation, we now have to repeat this process for the new user. First, switch from root to the user:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>su - your-user
+</code></pre></div>
+
+<p>And then, create a .ssh folder with the appropriate permissions:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mkdir</span> ~/.ssh
+<span class="nb">chmod </span>700 ~/.ssh
+</code></pre></div>
+
+<p>On your <strong>client</strong> (not the server!), run the following command to get the output of your public key:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">cat</span> ~/.ssh/id_rsa.pub
+</code></pre></div>
+
+<p>Then paste it in the following file on the server:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>vim ~/.ssh/authorized_keys
+</code></pre></div>
+
+<p>Save the file and exit, and change again the permissions to restrict access to the file:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">chmod </span>600 ~/.ssh/authorized_keys
+</code></pre></div>
+
+<p>Now return to the root user:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">exit</span>
+</code></pre></div>
+
+<p>The last step with SSH is to edit sshd_config in order to restrict the access via the created user and the corresponding public key:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>vim /etc/ssh/sshd_config
+</code></pre></div>
+
+<p>Look up and change appropriately the following lines in this file. Make sure they are not commented as well (not beginning with <strong>#</strong>):</p>
+
+<div class="highlight"><pre class="highlight shell"><code>PasswordAuthentication no
+PubkeyAuthentication <span class="nb">yes
+</span>ChallengeResponseAuthentication no
+PermitRootLogin no
+</code></pre></div>
+
+<p>We&#39;re almost done, but keep in mind that we have to allow incoming SSH connections with ufw:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>ufw limit ssh/tcp
+</code></pre></div>
+
+<p>The <strong>limit</strong> setting here will ban any IP attempting and failing to connect repeatedly. Combined with our changes on sshd_config, this is more than enough to protect this opened port.</p>
+
+<p>Last step for good measure is upgrading the system and rebooting the server:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>apt-get dist-upgrade <span class="o">&amp;&amp;</span> shutdown <span class="nt">-r</span> now
+</code></pre></div>
+
+<p>After reboot, make sure that you cannot SSH to the server with root, and connect with the created user instead:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>ssh your-user@my-droplet-ip
+</code></pre></div>
+
+<p>We&#39;re 100% done with our server, unless you&#39;re interested in the misc part at the end of this article. Let&#39;s move on to the client side.</p>
+
+<h2>Setting up sshuttle</h2>
+
+<p>Sshuttle is already available on most package managers. On archlinux, you can easily get it with <code>yay</code>:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>yay sshuttle
+</code></pre></div>
+
+<p>Keep in mind that sshuttle doesn&#39;t tunnel UDP traffic (except DNS) by default. A bit of extra work is needed on that part with tproxy, as described in the documentation: <a href="https://sshuttle.readthedocs.io/en/stable/tproxy.html" rel="nofollow">https://sshuttle.readthedocs.io/en/stable/tproxy.html</a></p>
+
+<p>Basically it boils down to the following steps:</p>
+
+<ul>
+<li>run the following command as root after booting up:</li>
+</ul>
+
+<div class="highlight"><pre class="highlight shell"><code>ip route add <span class="nb">local </span>default dev lo table 100
+ip rule add fwmark 1 lookup 100
+ip <span class="nt">-6</span> route add <span class="nb">local </span>default dev lo table 100
+ip <span class="nt">-6</span> rule add fwmark 1 lookup 100
+</code></pre></div>
+
+<ul>
+<li>run sshuttle as root with the tproxy method:</li>
+</ul>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span><span class="nv">SSH_AUTH_SOCK</span><span class="o">=</span><span class="s2">"</span><span class="nv">$SSH_AUTH_SOCK</span><span class="s2">"</span> sshuttle <span class="nt">--method</span><span class="o">=</span>tproxy <span class="se">\</span>
+                                             <span class="nt">--disable-ipv6</span> <span class="se">\</span>
+                                             <span class="nt">--dns</span> <span class="se">\</span>
+                                             <span class="nt">--exclude</span> your-server-ip <span class="se">\</span>
+                                             <span class="nt">-r</span> your-user@your-server-ip 0/0
+</code></pre></div>
+
+<p>That one is quite a mouthful so let&#39;s break it down:</p>
+
+<ul>
+<li><code>SSH_AUTH_SOCK=&quot;$SSH_AUTH_SOCK&quot;</code> ensures that you can connect normally with SSH despise running sshuttle as root</li>
+<li><code>--method=tproxy</code> is here to, well, activate the tproxy method for UDP traffic</li>
+<li><code>--disable-ipv6</code> is self-explanatory. Sadly, I found that my ipv6 address would leak otherwise, and I&#39;m not sure what is causing this at the moment.</li>
+<li><code>--dns</code> is to forward all DNS requests through SSH</li>
+<li><code>--exclude your-server-ip</code> is required when forwarding all your traffic with tproxy, to prevent sshuttle from intercepting SSH packets</li>
+<li><code>-r your-user@your-server-ip 0/0</code> finally, where to forward your entire traffic (represented here as 0/0)</li>
+</ul>
+
+<p>Since ipv6 can leak even with the <code>--disable-ipv6</code> command, let&#39;s disable it while using sshuttle. This can be achieved temporarily by running the following commands as root:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>sysctl <span class="nt">-w</span> net.ipv6.conf.all.disable_ipv6<span class="o">=</span>1
+<span class="nb">sudo </span>sysctl <span class="nt">-w</span> net.ipv6.conf.default.disable_ipv6<span class="o">=</span>1
+<span class="nb">sudo </span>sysctl <span class="nt">-w</span> net.ipv6.conf.lo.disable_ipv6<span class="o">=</span>1
+</code></pre></div>
+
+<p>This is all nice and well but I don&#39;t see myself running all of this at each boot, so let&#39;s wrap everything we mentioned in a script:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$EUID</span><span class="s2">"</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"This script must be run as root. Exiting."</span>
+    <span class="nb">exit
+</span><span class="k">fi
+
+</span>ip route add <span class="nb">local </span>default dev lo table 100
+ip rule add fwmark 1 lookup 100
+ip <span class="nt">-6</span> route add <span class="nb">local </span>default dev lo table 100
+ip <span class="nt">-6</span> rule add fwmark 1 lookup 100
+
+sysctl <span class="nt">-w</span> net.ipv6.conf.all.disable_ipv6<span class="o">=</span>1
+sysctl <span class="nt">-w</span> net.ipv6.conf.default.disable_ipv6<span class="o">=</span>1
+sysctl <span class="nt">-w</span> net.ipv6.conf.lo.disable_ipv6<span class="o">=</span>1
+
+sshuttle <span class="nt">--method</span><span class="o">=</span>tproxy <span class="se">\</span>
+    <span class="nt">--disable-ipv6</span> <span class="se">\</span>
+    <span class="nt">--dns</span> <span class="se">\</span>
+    <span class="nt">-e</span> <span class="s2">"sudo -u your-user ssh"</span> <span class="se">\</span>
+    <span class="nt">--daemon</span> <span class="se">\</span>
+    <span class="nt">--pidfile</span><span class="o">=</span>/home/your-user/sshuttle.pid <span class="se">\</span>
+    <span class="nt">--exclude</span> your-server-ip <span class="se">\</span>
+    <span class="nt">-r</span> your-user@your-server-ip 0/0
+</code></pre></div>
+
+<p>Three options have been added here:</p>
+
+<ul>
+<li><code>--daemon</code> to run sshuttle in background</li>
+<li><code>--pidfile</code> to put a file containing shuttle&#39;s PID in a defined path. Change the latter according to your needs.</li>
+</ul>
+
+<p>The <code>-e</code> flag will allow you to run the command as your main user and prompt for your ssh passphrase. This will use the right ssh pubkey to connect, even if ssh-agent isn&#39;t loaded yet and sshuttle is ran as root.</p>
+
+<p>Stopping the VPN is easy: just <code>kill</code> the PID given in <code>sshuttle.pid</code>. This can be automated with the following alias, ran as root:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">vpndown</span><span class="o">=</span><span class="s2">"kill '</span><span class="si">$(</span><span class="nb">cat</span> /home/your-user/sshuttle.pid<span class="si">)</span><span class="s2">'"</span>
+</code></pre></div>
+
+<p>You should now be all set, just by adding the previous script in your <code>$PATH</code>.</p>
+
+<h2>Misc: accessing the VPN when the SSH port is blocked</h2>
+
+<p>If you want to connect on WiFi hotspots, you might want to change the SSH port to 443 on your server as it is nearly guaranteed to be always opened, no matter how strict the WiFi&#39;s firewall is.</p>
+
+<p>We have to change SSH&#39;s default port on our server:</p>
+
+<div class="highlight"><pre class="highlight shell"><code>vim /etc/ssh/sshd_config
+</code></pre></div>
+
+<p>Find and change the following line accordingly. Uncomment it if necessary:</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>Port 443
+</code></pre></div>
+
+<p>One thing left now is to change ufw rules on your server to open that port:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>ufw limit <span class="k">in </span>443/tcp
+</code></pre></div>
+
+<p>Don&#39;t forget to remove port 22 on ufw:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>ufw status numbered
+</code></pre></div>
+
+<p>Delete related rules with their IDs:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>ufw delete &lt;rule-id-here&gt;
+</code></pre></div>
+
+<p>Now restart the sshd service:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>service sshd restart
+</code></pre></div>
+
+<p>Now, the only thing left is to specify the 443 port in the sshuttle script:</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-r your-user@your-server-ip:443 0/0
+</code></pre></div>
+
+<p>The VPN should now be accessible from almost everywhere.</p>
 
     </main>
     </main>

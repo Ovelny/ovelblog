@@ -118,6 +118,17 @@
 <div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>vim /etc/fstab
 </code></pre></div>
 
+<p>Comment out / delete the swap line in <code>/etc/initramfs-tools/conf.d/resume</code> too:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>vim /etc/initramfs-tools/conf.d/resume
+</code></pre></div>
+
+<p>Recreate the boot images and update GRUB for good measure:</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>update-initramfs <span class="nt">-u</span> <span class="nt">-k</span> all
+<span class="nb">sudo </span>update-grub
+</code></pre></div>
+
 <p>Reboot with <code>sudo reboot</code> and log back in. Next, resize the filesystem so it can fill the partition:</p>
 
 <div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo </span>resize2fs /dev/vda1
@@ -130,6 +141,7 @@
 <ul>
 <li><a href="https://blog.programster.org/expand-qcow2-root-filesystem" rel="nofollow">https://blog.programster.org/expand-qcow2-root-filesystem</a></li>
 <li><a href="https://askubuntu.com/questions/625072/deleted-swap-now-boot-takes-forever" rel="nofollow">https://askubuntu.com/questions/625072/deleted-swap-now-boot-takes-forever</a></li>
+<li><a href="https://unix.stackexchange.com/questions/224156/how-to-safely-turn-off-swap-permanently-and-reclaim-the-space-on-debian-jessie" rel="nofollow">https://unix.stackexchange.com/questions/224156/how-to-safely-turn-off-swap-permanently-and-reclaim-the-space-on-debian-jessie</a></li>
 </ul>
 
 <h2>Shrink qcow2 images</h2>

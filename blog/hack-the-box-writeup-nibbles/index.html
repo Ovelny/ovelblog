@@ -20,7 +20,8 @@
   </head>
   <body>
 
-    <header>
+
+      <header>
       <section>
         <a href="/">
           <img
@@ -33,7 +34,6 @@
       </section>
       <nav>
         <a href="/chronolog/">Chronolog</a>
-        <a href="/chasm/">Chasm</a>
         <a
           href="https://curiouscat.me/Ovelny"
           target="_blank"
@@ -52,9 +52,9 @@
     </header>
     <main>
 
-    <main>
-        <h2>Hack the box writeup: nibbles</h2>
-      <h2>Full walkthrough</h2>
+
+    <h2>Hack the box writeup: nibbles</h2>
+    <h2>Full walkthrough</h2>
 
 <p>As with everything, let’s start with enumeration on this target. A full nmap scan doesn&#39;t expose much with this box: only the SSH and HTTP ports are open, the latter being used by apache.<br>
 The target&#39;s address (<a href="http://10.10.10.75" rel="nofollow">http://10.10.10.75</a>) just leads to a &quot;hello world&quot; HTML page. By checking the source code however, we can see an HTML comment leading to another critical piece present on this target : a CMS called nibbleblog.</p>
@@ -129,7 +129,6 @@ For the root one, we&#39;re gonna need some additional privesc. Running <strong>
 
 <p>And the root flag is now ours: <strong>b6d745c0dfb6457c55591efc898ef88c</strong></p>
 
-    </main>
     </main>
     <footer id="footer">
         <div class="footer-section">Copyright © 2019 - 2021 ovelny</div>

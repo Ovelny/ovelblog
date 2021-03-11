@@ -151,7 +151,7 @@ Service Info: OSs: Windows, Windows Server 2008 R2 - 2012<span class="p">;</span
 
 <p>Both of the HTTP services lead us to the Microsoft IIS server default page:</p>
 
-<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/dc13dcea81e8421ab8c5e29d91ed2c32.png" alt="3529929dcd77fb973e8eb515aa5d845b.png"></p>
+<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/dc13dcea81e8421ab8c5e29d91ed2c32.png" alt="dc13dcea81e8421ab8c5e29d91ed2c32.png"></p>
 
 <p>Dirsearch results suggest something fishy. Why would we have a directory traversal vulnerability for /etc/passwd on a windows server? Looks like we might encounter some red herrings on this target.</p>
 
@@ -268,7 +268,7 @@ Bill - Juw4nnaM4n420696969!<span class="nv">$$$ </span>
 
 <p>After some additional attempts on SMB, I gave up to focus on web services yet again. Surely there has to be something more about them...</p>
 
-<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/36f9785c2800427887d357e058a5172c.png" alt="dfdaa88880bb3fa70f988bf1a7c81068.png"></p>
+<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/36f9785c2800427887d357e058a5172c.png" alt="36f9785c2800427887d357e058a5172c.png"></p>
 
 <p>And there is! Turns out all of <code>nt4wrksv</code> contents are directly accessible through HTTP on port 49663. We might be able to get a reverse shell exactly the same way.</p>
 
@@ -281,7 +281,7 @@ Bill - Juw4nnaM4n420696969!<span class="nv">$$$ </span>
 
 <p>Enumerating privileges on our current user instantly shows us how we will escalate our privileges to <code>SYSTEM</code>, since having <code>SeImpersonatePrivilege</code> enabled instantly makes this box vulnerable to PrintSpoofer64 (<a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):" rel="nofollow">https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):</a></p>
 
-<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/6b066a4a4d9b4736bbe677f905f04140.png" alt="bd810e6c5c039845840410b8f7e1d4e0.png"></p>
+<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/6b066a4a4d9b4736bbe677f905f04140.png" alt="6b066a4a4d9b4736bbe677f905f04140.png"></p>
 
 <h2>Privilege Escalation</h2>
 
@@ -291,7 +291,7 @@ Bill - Juw4nnaM4n420696969!<span class="nv">$$$ </span>
 
 <p>All that is left for us is to run the executable with <code>-i -c powershell</code> flags enabled, so we can get an interactive powershell session as <code>SYSTEM</code>:</p>
 
-<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/ca94fc0f11f340d8b45034ff083cafae.png" alt="f8780d993d9aa978ab97e75dddce1383.png"></p>
+<p><img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/ca94fc0f11f340d8b45034ff083cafae.png" alt="ca94fc0f11f340d8b45034ff083cafae.png"></p>
 
 <p>Getting <code>Root.txt</code> output is now in our hands.</p>
 

@@ -107,7 +107,7 @@ Service Info: OSs: Windows, Windows Server 2008 R2 - 2012&lt;span class="p"&gt;;
 
 &lt;p&gt;Both of the HTTP services lead us to the Microsoft IIS server default page:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/dc13dcea81e8421ab8c5e29d91ed2c32.png" alt="3529929dcd77fb973e8eb515aa5d845b.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/dc13dcea81e8421ab8c5e29d91ed2c32.png" alt="dc13dcea81e8421ab8c5e29d91ed2c32.png"&gt;&lt;/p&gt;
 
 &lt;p&gt;Dirsearch results suggest something fishy. Why would we have a directory traversal vulnerability for /etc/passwd on a windows server? Looks like we might encounter some red herrings on this target.&lt;/p&gt;
 
@@ -224,7 +224,7 @@ Bill - Juw4nnaM4n420696969!&lt;span class="nv"&gt;$$$ &lt;/span&gt;
 
 &lt;p&gt;After some additional attempts on SMB, I gave up to focus on web services yet again. Surely there has to be something more about them...&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/36f9785c2800427887d357e058a5172c.png" alt="dfdaa88880bb3fa70f988bf1a7c81068.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/36f9785c2800427887d357e058a5172c.png" alt="36f9785c2800427887d357e058a5172c.png"&gt;&lt;/p&gt;
 
 &lt;p&gt;And there is! Turns out all of &lt;code&gt;nt4wrksv&lt;/code&gt; contents are directly accessible through HTTP on port 49663. We might be able to get a reverse shell exactly the same way.&lt;/p&gt;
 
@@ -237,7 +237,7 @@ Bill - Juw4nnaM4n420696969!&lt;span class="nv"&gt;$$$ &lt;/span&gt;
 
 &lt;p&gt;Enumerating privileges on our current user instantly shows us how we will escalate our privileges to &lt;code&gt;SYSTEM&lt;/code&gt;, since having &lt;code&gt;SeImpersonatePrivilege&lt;/code&gt; enabled instantly makes this box vulnerable to PrintSpoofer64 (&lt;a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):" rel="nofollow"&gt;https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/6b066a4a4d9b4736bbe677f905f04140.png" alt="bd810e6c5c039845840410b8f7e1d4e0.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/6b066a4a4d9b4736bbe677f905f04140.png" alt="6b066a4a4d9b4736bbe677f905f04140.png"&gt;&lt;/p&gt;
 
 &lt;h2&gt;Privilege Escalation&lt;/h2&gt;
 
@@ -247,7 +247,7 @@ Bill - Juw4nnaM4n420696969!&lt;span class="nv"&gt;$$$ &lt;/span&gt;
 
 &lt;p&gt;All that is left for us is to run the executable with &lt;code&gt;-i -c powershell&lt;/code&gt; flags enabled, so we can get an interactive powershell session as &lt;code&gt;SYSTEM&lt;/code&gt;:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/ca94fc0f11f340d8b45034ff083cafae.png" alt="f8780d993d9aa978ab97e75dddce1383.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/ca94fc0f11f340d8b45034ff083cafae.png" alt="ca94fc0f11f340d8b45034ff083cafae.png"&gt;&lt;/p&gt;
 
 &lt;p&gt;Getting &lt;code&gt;Root.txt&lt;/code&gt; output is now in our hands.&lt;/p&gt;
 

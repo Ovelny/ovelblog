@@ -121,7 +121,7 @@ code {
 
 p > img {
 margin-left: 50%;
-transform: translateX(calc(-50% + 0.5px));
+transform: translateX(calc(-50% - 0.5px));
 box-shadow: 0 0 0 3px #1A1A1A;
 margin-bottom: 20px;
 margin-top: 20px;

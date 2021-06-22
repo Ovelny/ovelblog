@@ -14,16 +14,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
   text-align: justify;
+  text-rendering: optimizeLegibility;
   color: #1A1A1A;
   background-color: #F7F7F7;
   padding: 0 10px;
   overflow-x: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
+  /* -webkit-hyphens: auto; */
+  /* -ms-hyphens: auto; */
+  /* -moz-hyphens: auto; */
+  /* hyphens: auto; */
   min-height: 91vh;
   display:flex;
   flex-direction:column;
@@ -117,7 +118,7 @@ samp {
 }
 
 code {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 :not(.highlight) > code {

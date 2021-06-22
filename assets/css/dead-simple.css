@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'JetBrainsMonoNL';
+    src: url('https://ovelny.sh/assets/fonts/JetBrainsMonoNL-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 body {
   margin: 40px auto;
   max-width: 800px;

@@ -15,9 +15,7 @@
     <published>2021-03-11T23:00:00Z</published>
     <updated>2021-03-11T23:00:00Z</updated>
     <link rel="alternate" href="https://ovelny.sh/blog/tryhackme-writeup-relevant/" type="text/html"/>
-    <content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;Relevant is a TryHackMe room designed to simulate a black box penetration test. As such, no information is provided about the target whatsoever, with the exception of its scope. As proof of exploitation, two flags must be secured:&lt;/p&gt;
+    <content type="html">&lt;p&gt;Relevant is a TryHackMe room designed to simulate a black box penetration test. As such, no information is provided about the target whatsoever, with the exception of its scope. As proof of exploitation, two flags must be secured:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;User.txt&lt;/strong&gt;&lt;/li&gt;
